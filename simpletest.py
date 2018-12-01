@@ -28,8 +28,10 @@ mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 GPIO.setmode(GPIO.BCM)             # choose BCM or BOARD
 GPIO.setup(22, GPIO.OUT)           # set GPIO24 as an output
 GPIO.setup(17, GPIO.OUT)
+GPIO.setup(24, GPIO.OUT)
+GPIO.setup(23, GPIO.OUT)
 
-gpioPin = [ 22, 17]
+gpioPin = [ 22, 17, 24, 23]
 print('Reading MCP3008 values, press Ctrl-C to quit...')
 # Print nice channel column headers.
 #print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*range(8)))
@@ -51,7 +53,7 @@ try:
 				if values[i]>1000:
 					print('{}{}{}{}'.format('sei in posizione ',i,' , ',n))
 			# Pause for half a second.
-    			time.sleep(0.2)
+    			time.sleep(0.05)
 			GPIO.output(p, 0)
 except KeyboardInterrupt:          # trap a CTRL+C keyboard interrupt
     GPIO.cleanup()
