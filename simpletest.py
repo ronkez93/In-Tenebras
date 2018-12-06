@@ -12,6 +12,8 @@ import Adafruit_MCP3008
 # inport GPIO library
 import RPi.GPIO as GPIO            # import RPi.GPIO module
 from time import sleep
+import serial #importa libreria serial lettura valori usb
+
 
 # Software SPI configuration:
 #CLK  = 18
@@ -32,6 +34,7 @@ GPIO.setup(24, GPIO.OUT)
 GPIO.setup(23, GPIO.OUT)
 
 gpioPin = [ 22, 17, 24, 23]
+ser = serial.Serial('/dev/ttyACM0', 9600)
 print('Reading MCP3008 values, press Ctrl-C to quit...')
 # Print nice channel column headers.
 #print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*range(8)))
@@ -52,6 +55,7 @@ try:
     			for i in range(len(values)):
 				if values[i]>1000:
 					print('{}{}{}{}'.format('sei in posizione ',i,' , ',n))
+					print(str(1*4+n+1))
 			# Pause for half a second.
     			time.sleep(0.05)
 			GPIO.output(p, 0)
