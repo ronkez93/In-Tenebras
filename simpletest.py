@@ -55,8 +55,10 @@ try:
     			for i in range(len(values)):
 				if values[i]>1000:
 					print('{}{}{}{}'.format('sei in posizione ',i,' , ',n))
-					print(str(1*4+n+1))
+					num=i*4+n+1
+					print(str(i*4+n+1))
 			# Pause for half a second.
+			ser.write(num)
     			time.sleep(0.05)
 			GPIO.output(p, 0)
 except KeyboardInterrupt:          # trap a CTRL+C keyboard interrupt
