@@ -26,7 +26,7 @@ import serial #importa libreria serial lettura valori usb
 #CS2 = 26
 #mcp2 = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS2, miso=MISO, mosi=MOSI)
 
-# Hardware SPI configuration:
+# Hardware SPI configuration: un bus, due MCP3008
 SPI_PORT   = 0
 SPI_DEVICE = 0
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
