@@ -1,17 +1,17 @@
 #include <Adafruit_NeoPixel.h> 
 #include <SPI.h>
-#include <MFRC522.h>
+//#include <MFRC522.h>
 #ifdef __AVR__
   #include <avr/power.h>
 #endif
 // Which pin on the Arduino is connected to the NeoPixels? // On a Trinket or Gemma we suggest changing this to 1
 
 #define PIN 7
-#define SS_PIN 53
+/*#define SS_PIN 53
 #define RST_PIN 5
 #define LED_G 2 //define green LED pin
 #define LED_R 4 //define red LED
-MFRC522 mfrc522(SS_PIN, RST_PIN);
+MFRC522 mfrc522(SS_PIN, RST_PIN);*/
 
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXELS 8
@@ -33,7 +33,7 @@ void setup() {
   // End of trinket special code
   pixels.begin(); // This initializes the NeoPixel library.
   
-  SPI.begin();      // Initiate  SPI bus
+  /*SPI.begin();      // Initiate  SPI bus
   mfrc522.PCD_Init();   // Initiate MFRC522
   //myServo.attach(3); //servo pin
   //myServo.write(0); //servo start position
@@ -42,7 +42,7 @@ void setup() {
   //pinMode(BUZZER, OUTPUT);
   //noTone(BUZZER);
   Serial.println("Put your card to the reader...");
-  Serial.println();
+  Serial.println();*/
 }
 
 void loop() {
@@ -50,11 +50,11 @@ void loop() {
   n=Serial.read();
   n=n-48;
   pos = n;
-  sendTextToNexion();
+  sendTextToNextion();
   if (n>7){
     n=1;
   }
-  // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
+  /*// For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
   // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
   pixels.setPixelColor(n, pixels.Color(90,0,0)); // Moderately bright green color.
   pixels.show(); // This sends the updated pixel color to the hardware.
@@ -105,7 +105,7 @@ void loop() {
     //tone(BUZZER, 300);
     delay(1000);
     digitalWrite(LED_R, LOW);
-    //noTone(BUZZER);
+    //noTone(BUZZER);*/
   }
 }
 
