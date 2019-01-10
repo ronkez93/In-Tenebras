@@ -22,6 +22,7 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ80
 
 int delayval = 100; // delay for half a second 
 int n=0;
+int pos = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -48,6 +49,8 @@ void loop() {
   n=0;
   n=Serial.read();
   n=n-48;
+  pos = n;
+  sendTextToNexion();
   if (n>7){
     n=1;
   }
@@ -104,4 +107,18 @@ void loop() {
     digitalWrite(LED_R, LOW);
     //noTone(BUZZER);
   }
+}
+
+void sendTextToNextion()
+{
+  String command = "t1.txt=\""+String(pos)+"\"";
+  Serial.print(command);
+  endNextionCommand();
+}
+
+void endNextionCommand()
+{
+  Serial.write(0xff);
+  Serial.write(0xff);
+  Serial.write(0xff);
 }
