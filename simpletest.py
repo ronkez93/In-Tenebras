@@ -42,7 +42,7 @@ GPIO.setup(24, GPIO.OUT)
 GPIO.setup(23, GPIO.OUT)
 
 gpioPin = [ 22, 17, 24, 23]
-#ser = serial.Serial('/dev/ttyACM0', 9600)
+ser = serial.Serial('/dev/ttyACM0', 9600)
 print('Reading MCP3008 values, press Ctrl-C to quit...')
 # Print nice channel column headers.
 #print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*range(8)))
@@ -71,7 +71,7 @@ try:
 					num=i*4+n
 					print(str(i*4+n+1))
 			# Pause for half a second.
-#			ser.write(str(num))
+			ser.write(str(num))
     			time.sleep(0.05)
 			GPIO.output(p, 0)
 except KeyboardInterrupt:          # trap a CTRL+C keyboard interrupt
