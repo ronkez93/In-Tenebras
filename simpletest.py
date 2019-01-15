@@ -68,8 +68,8 @@ try:
                     num = i * 4 + n
                     print(str(i * 4 + n + 1))
             # Pause for half a second.
-            		ser.write(str(num))
-            time.sleep(0.05)
+	       	    ser.write(str(num))
+            time.sleep(0.1)
             GPIO.output(p, 0)
 except KeyboardInterrupt:  # trap a CTRL+C keyboard interrupt
     GPIO.cleanup()
