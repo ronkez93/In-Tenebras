@@ -47,11 +47,11 @@ print('partenza del ciclo di lettura della posizione')
 print('-' * 57)
 # Main program loop.
 num = 0
-
+count = 0;
 try:
     while True:
-	flushinput()
-        for n, p in enumerate(gpioPin):
+	count +=1
+	for n, p in enumerate(gpioPin):
             GPIO.output(p, 1)
             # Read all the ADC channel values in a list.
             values = [0] * 8
@@ -72,5 +72,8 @@ try:
 	       	    ser.write(str(num))
             time.sleep(0.1)
             GPIO.output(p, 0)
+	if count==100:
+		ser.flushInput()
+		count=0
 except KeyboardInterrupt:  # trap a CTRL+C keyboard interrupt
     GPIO.cleanup()
