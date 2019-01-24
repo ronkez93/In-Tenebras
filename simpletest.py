@@ -50,6 +50,7 @@ num = 0
 
 try:
     while True:
+	flushinput()
         for n, p in enumerate(gpioPin):
             GPIO.output(p, 1)
             # Read all the ADC channel values in a list.

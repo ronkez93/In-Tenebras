@@ -45,8 +45,8 @@ void loop() {
   n=0;
   if(Serial.available()>0){
 	  n=Serial.read();
-	  Serial.print("ho letto: ");
-	  Serial.println(n);
+	  //Serial.print("ho letto: ");
+	  //Serial.println(n);
 	  pixel(n);
 	  sendPositionToNextion();
     rfid();
@@ -133,5 +133,4 @@ void rfid(){
 void ledoff(){
   digitalWrite(LED_G, LOW);
   digitalWrite(LED_R, LOW);
-}
 }
