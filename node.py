@@ -30,5 +30,8 @@ class Node:
     def gety(self):
         return self.y
 
+    def getPortal(self):
+        return self.portal
 
-
+    def setPortal(self,p):
+        self.portal=p

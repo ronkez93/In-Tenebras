@@ -53,7 +53,7 @@ class Enemy:
     def setMove(self):
         self.move1 = True
 
-    def dijsktra(self, x, y):
+    def generatepathto(self, x, y):
         source = self.nodes[self.tileX][self.tileY]
         target = self.nodes[x][y]
         nodes = set(self.nodes)
@@ -68,7 +68,7 @@ class Enemy:
         while len(unvisited) > 0:
             u = None
             for n in unvisited:
-                if u == None or dist[n] < dist[u]:
+                if u is None or dist[n] < dist[u]:
                     u = n
             if u == target:
                 break
@@ -78,12 +78,22 @@ class Enemy:
                 if alt < dist[n]:
                     dist[n] = alt
                     prev[n] = u
-        if prev[target] == None:
+        if prev[target] is None:
             return
         cpath = []
         curr = target
-        while curr != None:
+        while curr is not None:
             cpath.append(curr)
             curr = prev[curr]
         cpath.reverse()
         self.currentpath = cpath
+
+    def onPortal(self,x,y):
+        return self.nodes[x][y].getPortal()
+
+    def destroyPortal(self,x,y):
+        self.nodes[x][y].setPortal(False)
+        for n in self.nodes:
+            if n.getx != x and n.gety != y and n.getPortal:
+                self.nodes[n.getx][n.gety].neighbours.remove(self.nodes[x][y])
+                self.nodes[x][y].neighbours.remove(self.nodes[n.getx][n.gety])
