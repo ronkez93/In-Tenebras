@@ -23,7 +23,7 @@ class Enemy:
         self.move1 = False
         self.GeneratePathfindingGraph()
         self.currentpath = []
-        self.remainingMovement = 4
+        self.remainingMovement = 2
 
     def updatePlayerPos(self, playerx, playery):
         self.playerTarget.position(playerx, playery)
@@ -97,3 +97,16 @@ class Enemy:
             if n.getx != x and n.gety != y and n.getPortal:
                 self.nodes[n.getx][n.gety].neighbours.remove(self.nodes[x][y])
                 self.nodes[x][y].neighbours.remove(self.nodes[n.getx][n.gety])
+
+    def update(self):
+        if self.move1:
+            self.generatepathto(self.playerTarget.getX(),self.playerTarget.getY())
+            if self.currentpath is not None:
+                self.remainingMovement -= self.map.costToEnter(self.tileX,self.tileY,self.currentpath[1].getx(),self.currentpath[1].gety())
+                self.tileX=self.currentpath[1].getx()
+                self.tileY=self.currentpath[1].gety()
+                self.currentpath.pop(0)
+                if len(self.currentpath) ==1:
+                    self.currentpath=None
+                if self.remainingMovement <=0:
+
