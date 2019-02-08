@@ -12,23 +12,28 @@ class Enemy:
 
     def __init__(self, playerx, playery):
         global MapSize
+        global portalSpawn
         self.map = Map()
         self.nodes = self.map.getAllNode()
         self.playerTarget = Player(playerx, playery)
-        self.tileX = np.random.random_integer(MapSize)
-        self.tileY = np.random.random_integer(MapSize)
+        self.tileX = np.random.random_integers(MapSize)
+        self.tileY = np.random.random_integers(MapSize)
         while self.playerTarget.distanceTo(self.tileX, self.tileY) < 7:
-            self.tileX = np.random.random_integer(MapSize)
-            self.tileY = np.random.random_integer(MapSize)
+            self.tileX = np.random.random_integers(MapSize)
+            self.tileY = np.random.random_integers(MapSize)
         self.move1 = False
         self.GeneratePathfindingGraph()
         self.currentpath = []
-        self.remainingMovement = 2
+        self.maxMovement=2
+        self.remainingMovement = self.maxMovement
+        self.turnToSpawn=portalSpawn
 
+    #aggiorna la posizione del giocatore sulla base delle coordinate date
     def updatePlayerPos(self, playerx, playery):
         self.playerTarget.position(playerx, playery)
         self.move1 = True
 
+    #crea una struttura basandosi sui nodi vicini
     def GeneratePathfindingGraph(self):
         # Now that all the nodes exist, calculate their neighbours
         for x in range(MapSize):
@@ -50,9 +55,11 @@ class Enemy:
                 if y < MapSize - 1:
                     self.nodes[x][y].addNeighbour(self.nodes[x][y + 1])
 
+    #cambia lo stato del nemico così che può muoversi
     def setMove(self):
         self.move1 = True
 
+    #crea un lista di nodi currentpath contenente tutte le celle per arrivare alla posizione passata
     def generatepathto(self, x, y):
         source = self.nodes[self.tileX][self.tileY]
         target = self.nodes[x][y]
@@ -88,9 +95,11 @@ class Enemy:
         cpath.reverse()
         self.currentpath = cpath
 
+    #chiede se la cella alle coordinate passate è anche la cella di un portale
     def onPortal(self,x,y):
         return self.nodes[x][y].getPortal()
 
+    #funzione per distruggere un portale nella casella di coordinate passate
     def destroyPortal(self,x,y):
         self.nodes[x][y].setPortal(False)
         for n in self.nodes:
@@ -98,15 +107,45 @@ class Enemy:
                 self.nodes[n.getx][n.gety].neighbours.remove(self.nodes[x][y])
                 self.nodes[x][y].neighbours.remove(self.nodes[n.getx][n.gety])
 
+    #cambia il mannimo numero di movimenti a disposizione del nemico sulla base dei bpm del giocatore
+    def setMaxMovement(self,MM):
+        self.maxMovement=MM
+
+    #turno del nemico
     def update(self):
-        if self.move1:
+        if self.move1:      # se tocca al nemico creo il percorso fino al giocatore
             self.generatepathto(self.playerTarget.getX(),self.playerTarget.getY())
-            if self.currentpath is not None:
+            if self.currentpath is not None:    # se non sono sul giocatore il nemico si muove finchè può
                 self.remainingMovement -= self.map.costToEnter(self.tileX,self.tileY,self.currentpath[1].getx(),self.currentpath[1].gety())
                 self.tileX=self.currentpath[1].getx()
                 self.tileY=self.currentpath[1].gety()
                 self.currentpath.pop(0)
-                if len(self.currentpath) ==1:
+                if len(self.currentpath) ==1:       # se dopo essersi mosso sono arrivato al giocatore cancello il percorso
                     self.currentpath=None
-                if self.remainingMovement <=0:
+                if self.remainingMovement <=0:      # se ho finito i movimenti a disposizione resetto le variabili di movimento e vedo se devo spawnare un portale
+                    self.move1=False
+                    self.remainingMovement=self.maxMovement
+                    self.turnToSpawn -=1
+                    if self.turnToSpawn ==0:
+                        self.turnToSpawn=self.portalSpawn
+                        spawned=False
+                        while not spawned:
+                            spawnX=np.random.random_integers(self.MapSize)
+                            spawnY=np.random.random_integers(self.MapSize)
+                            if not self.nodes[spawnX][spawnY].getPortal():
+                                stanza=self.nodes[spawnX][spawnY].getRoom()
+                                spawned=True
+                                for n in self.nodes:
+                                    if n.getRoom() == stanza:
+                                        spawned=False
+                                if spawned:
+                                    self.nodes[spawnX][spawnY].setPortal(True)
+                        
+
+
+
+
+
+
+
 

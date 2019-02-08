@@ -35,3 +35,6 @@ class Node:
 
     def setPortal(self,p):
         self.portal=p
+
+    def getRoom(self):
+        return self.roomID
