@@ -9,6 +9,8 @@ class Player:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        self.fede = 5
+        self.stamina = 5
 
     def position(self, x, y):
         self.x = x
@@ -23,8 +25,11 @@ class Player:
     def getY(self):
         return self.y
 
-    def setX(self,x):
-        self.x=x
+    def setX(self, x):
+        self.x = x
 
-    def setY(self,y):
-        self.y=y
+    def setY(self, y):
+        self.y = y
+
+    def decrementaFede(self):
+        self.fede -= 1
