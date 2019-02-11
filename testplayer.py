@@ -48,6 +48,9 @@ print('-' * 57)
 # Main program loop.
 num = 0
 count = 0;
+posPlayerX = -1
+posPlayerY = -1
+nemico = None
 try:
     while True:
         count += 1
@@ -68,10 +71,15 @@ try:
                     print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
                     num = i * 4 + n
                     print(str(i * 4 + n + 1))
+                    posPlayerX = i
+                    posPlayerY = n
                     # Pause for half a second.
-                    ser.write(str(num))
+
             time.sleep(0.1)
             GPIO.output(p, 0)
+        if posPlayerX != -1 and posPlayerY != -1:
+            nemico = Enemy(posPlayerX, posPlayerY)
+            ser.write(str(nemico.getPos()))
         if count == 100:
             ser.flushInput()
             count = 0

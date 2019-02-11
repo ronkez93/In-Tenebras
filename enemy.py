@@ -24,16 +24,16 @@ class Enemy:
         self.move1 = False
         self.GeneratePathfindingGraph()
         self.currentpath = []
-        self.maxMovement=2
+        self.maxMovement = 2
         self.remainingMovement = self.maxMovement
-        self.turnToSpawn=portalSpawn
+        self.turnToSpawn = portalSpawn
 
-    #aggiorna la posizione del giocatore sulla base delle coordinate date
+    # aggiorna la posizione del giocatore sulla base delle coordinate date
     def updatePlayerPos(self, playerx, playery):
         self.playerTarget.position(playerx, playery)
         self.move1 = True
 
-    #crea una struttura basandosi sui nodi vicini
+    # crea una struttura basandosi sui nodi vicini
     def GeneratePathfindingGraph(self):
         # Now that all the nodes exist, calculate their neighbours
         for x in range(MapSize):
@@ -55,11 +55,11 @@ class Enemy:
                 if y < MapSize - 1:
                     self.nodes[x][y].addNeighbour(self.nodes[x][y + 1])
 
-    #cambia lo stato del nemico così che può muoversi
+    # cambia lo stato del nemico così che può muoversi
     def setMove(self):
         self.move1 = True
 
-    #crea un lista di nodi currentpath contenente tutte le celle per arrivare alla posizione passata
+    # crea un lista di nodi currentpath contenente tutte le celle per arrivare alla posizione passata
     def generatepathto(self, x, y):
         source = self.nodes[self.tileX][self.tileY]
         target = self.nodes[x][y]
@@ -95,64 +95,75 @@ class Enemy:
         cpath.reverse()
         self.currentpath = cpath
 
-    #chiede se la cella alle coordinate passate è anche la cella di un portale
-    def onPortal(self,x,y):
+    # chiede se la cella alle coordinate passate è anche la cella di un portale
+    def onPortal(self, x, y):
         return self.nodes[x][y].getPortal()
 
-    #funzione per distruggere un portale nella casella di coordinate passate
-    def destroyPortal(self,x,y):
+    # funzione per distruggere un portale nella casella di coordinate passate
+    def destroyPortal(self, x, y):
         self.nodes[x][y].setPortal(False)
         for n in self.nodes:
             if n.getx != x and n.gety != y and n.getPortal:
                 self.nodes[n.getx][n.gety].neighbours.remove(self.nodes[x][y])
                 self.nodes[x][y].neighbours.remove(self.nodes[n.getx][n.gety])
 
-    #cambia il mannimo numero di movimenti a disposizione del nemico sulla base dei bpm del giocatore
-    def setMaxMovement(self,MM):
-        self.maxMovement=MM
+    # cambia il mannimo numero di movimenti a disposizione del nemico sulla base dei bpm del giocatore
+    def setMaxMovement(self, MM):
+        self.maxMovement = MM
 
-    #turno del nemico
+    # turno del nemico
     def update(self):
-        while self.move1:      # finchè tocca al nemico creo il percorso fino al giocatore
-            self.generatepathto(self.playerTarget.getX(),self.playerTarget.getY())
-            if self.currentpath is not None:    # se non sono sul giocatore il nemico si muove finchè può
-                self.remainingMovement -= self.map.costToEnter(self.tileX,self.tileY,self.currentpath[1].getx(),self.currentpath[1].gety())
-                self.tileX=self.currentpath[1].getx()
-                self.tileY=self.currentpath[1].gety()
+        while self.move1:  # finchè tocca al nemico creo il percorso fino al giocatore
+            self.generatepathto(self.playerTarget.getX(), self.playerTarget.getY())
+            if self.currentpath is not None:  # se non sono sul giocatore il nemico si muove finchè può
+                self.remainingMovement -= self.map.costToEnter(self.tileX, self.tileY, self.currentpath[1].getx(),
+                                                               self.currentpath[1].gety())
+                self.tileX = self.currentpath[1].getx()
+                self.tileY = self.currentpath[1].gety()
                 self.currentpath.pop(0)
-                if len(self.currentpath) ==1:       # se dopo essersi mosso sono arrivato al giocatore cancello il percorso
-                    self.currentpath=None
-                if self.remainingMovement <=0:      # se ho finito i movimenti a disposizione resetto le variabili di movimento e vedo se devo spawnare un portale
-                    self.move1=False
-                    self.remainingMovement=self.maxMovement
-                    self.turnToSpawn -=1
-                    if self.turnToSpawn ==0:        # se è il momento di spawnare un portale
-                        self.turnToSpawn=self.portalSpawn
-                        spawned=False
-                        while not spawned:          # finchè non viene spawnato genero coordinate e verifico che non siano in una stanza con già un portale
-                            spawnX=np.random.random_integers(self.MapSize)
-                            spawnY=np.random.random_integers(self.MapSize)
-                            if not self.nodes[spawnX][spawnY].getPortal():  # se le coordinate non hanno già un portale, controllo se non ce n'è un altro nella stanza
-                                stanza=self.nodes[spawnX][spawnY].getRoom()
-                                spawned=True
+                if len(self.currentpath) == 1:  # se dopo essersi mosso sono arrivato al giocatore cancello il percorso
+                    self.currentpath = None
+                if self.remainingMovement <= 0:  # se ho finito i movimenti a disposizione resetto le variabili di movimento e vedo se devo spawnare un portale
+                    self.move1 = False
+                    self.remainingMovement = self.maxMovement
+                    self.turnToSpawn -= 1
+                    if self.turnToSpawn == 0:  # se è il momento di spawnare un portale
+                        self.turnToSpawn = self.portalSpawn
+                        spawned = False
+                        while not spawned:  # finchè non viene spawnato genero coordinate e verifico che non siano in una stanza con già un portale
+                            spawnX = np.random.random_integers(self.MapSize)
+                            spawnY = np.random.random_integers(self.MapSize)
+                            if not self.nodes[spawnX][
+                                spawnY].getPortal():  # se le coordinate non hanno già un portale, controllo se non ce n'è un altro nella stanza
+                                stanza = self.nodes[spawnX][spawnY].getRoom()
+                                spawned = True
                                 for n in self.nodes:
                                     if n.getRoom() == stanza:
-                                        spawned=False
-                                if spawned:         # dopo che trovo delle coordinate valide aggiorno i vicini creando collegamenti con gli altri portali
+                                        spawned = False
+                                if spawned:  # dopo che trovo delle coordinate valide aggiorno i vicini creando collegamenti con gli altri portali
                                     self.nodes[spawnX][spawnY].setPortal(True)
                                     for n in self.nodes:
-                                        if n.getPortal():       #controllo di non aggiungere un collegamento tra nodo a se stesso
+                                        if n.getPortal():  # controllo di non aggiungere un collegamento tra nodo a se stesso
                                             if n.getx() != spawnX or n.gety() != spawnY:
                                                 self.nodes[n.getx()][n.gety()].addNeighbour(self.nodes[spawnX][spawnY])
                                                 self.nodes[spawnX][spawnY].addNeighbour(self.nodes[n.getx()][n.gety()])
-                if self.tileX == self.playerTarget.getX() and self.tileY==self.playerTarget.getY(): # se ho raggiunto il giocatore, il nemico non si muove più e si teletrasporta ad almeno sei caselle di distanza. il ciocatore perde fede
-                    self.remainingMovement=0
-                    distance=False
+                if self.tileX == self.playerTarget.getX() and self.tileY == self.playerTarget.getY():  # se ho raggiunto il giocatore, il nemico non si muove più e si teletrasporta ad almeno sei caselle di distanza. il ciocatore perde fede
+                    self.remainingMovement = 0
+                    distance = False
                     while not distance:
-                        newX=np.random.random_integers(self.MapSize)
-                        newY=np.random.random_integers(self.MapSize)
-                        if np.abs(self.tileX-newX) >=6 or np.abs(self.tileY-newY):
-                            distance=True
-                            self.tileX=newX
-                            self.tileY=newY
+                        newX = np.random.random_integers(self.MapSize)
+                        newY = np.random.random_integers(self.MapSize)
+                        if np.abs(self.tileX - newX) >= 6 or np.abs(self.tileY - newY):
+                            distance = True
+                            self.tileX = newX
+                            self.tileY = newY
                             self.playerTarget.decrementaFede()
+
+    def getX(self):
+        return self.tileX
+
+    def getY(self):
+        return self.tileY
+
+    def getPos(self):
+        return self.tileY * self.MapSize + self.tileX
