@@ -2,6 +2,7 @@
 from .node import Node
 from .enemy import Enemy
 import numpy as np
+import csv
 
 
 class Player:
@@ -11,6 +12,8 @@ class Player:
         self.y = y
         self.fede = 5
         self.stamina = 5
+        self.pathfindingGraph = np.array([[Node() for j in range(15)] for i in range(15)])
+
 
     def position(self, x, y):
         self.x = x
@@ -33,3 +36,7 @@ class Player:
 
     def decrementaFede(self):
         self.fede -= 1
+
+    def decrementaStamina(self):
+        self.stamina -=1
+

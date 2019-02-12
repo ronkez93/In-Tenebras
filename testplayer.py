@@ -62,13 +62,21 @@ try:
             for i in range(8):
                 # The read_adc function will get the value of the specified channel (0-7).
                 values[i] = mcp.read_adc(i)
+            for i in range(7):
                 values2[i] = mcp2.read_adc(i)
             # Print the ADC values.
             # results = np.append(values, values2, axis=0)
             #    			print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
+            for i in range(len(values)):
+                if values[i] > 1000:
+                    print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
+                    num = i * 4 + n
+                    print(str(i * 4 + n + 1))
+                    posPlayerX = i
+                    posPlayerY = n
             for i in range(len(values2)):
                 if values2[i] > 1000:
-                    print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
+                    print('{}{}{}{}'.format('sei in posizione ', i+8, ' , ', n))
                     num = i * 4 + n
                     print(str(i * 4 + n + 1))
                     posPlayerX = i
