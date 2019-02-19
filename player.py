@@ -1,6 +1,7 @@
 # player class
 from .node import Node
 from .enemy import Enemy
+from .Map import Map
 import numpy as np
 import csv
 
@@ -12,7 +13,16 @@ class Player:
         self.y = y
         self.fede = 5
         self.stamina = 5
-        self.pathfindingGraph = np.array([[Node() for j in range(15)] for i in range(15)])
+        self.map = Map()
+        self.roomID = self.map[self.x][self.y].getID()
+        self.pathfindingGraph = self.map.getAllNode()       # grafo pathfinding giocatore
+        with open('grafo.txt') as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            for row in csv_reader:
+                for i in range(1,8):
+                    if row[i]!=-1:
+                        self.pathfindingGraph[row[0]%15][np.floor_divide(row[0],15)].addNeighbour(self.pathfindingGraph[row[i]%15][np.floor_divide(row[i],15)])
+
 
 
     def position(self, x, y):

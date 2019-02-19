@@ -22,6 +22,8 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 int delayval = 100; // delay for half a second 
 int n=0;
 int oldPixelnum=-1;
+int pixelColor=0;
+
 
 void setup() {
   //rfid
@@ -44,7 +46,10 @@ void setup() {
 void loop() {
   n=0;
   if(Serial.available()>0){
-	  n=Serial.read();
+	  n=Serial.readStringUntil(',');
+    if (n != ""){
+        pixelColor = Serial.readStringUntil('\n');
+    }
 	  //Serial.print("ho letto: ");
 	  //Serial.println(n);
 	  pixel(n);

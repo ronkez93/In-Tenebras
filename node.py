@@ -10,6 +10,7 @@ class Node:
         self.roomID = roomID
         self.neighbours = []
         self.portal = False
+        self.manifestazione = False
 
     def getID(self):
         return self.x + self.y * 15
@@ -39,3 +40,9 @@ class Node:
 
     def getRoom(self):
         return self.roomID
+
+    def setManifestazione(self,m):
+        self.manifestazione=m
+
+    def getManifestazione(self):
+        return self.manifestazione

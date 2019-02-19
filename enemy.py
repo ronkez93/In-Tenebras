@@ -9,10 +9,13 @@ import math
 class Enemy:
     MapSize = 15
     portalSpawn = 4
+    turniSpawnManifestazione = 4
 
-    def __init__(self, playerx, playery):
+    def __init__(self, playerx,
+                 playery):  # inizializzazione: posizione nemico, posizione giocatore, spawn 2 eventi e portale
         global MapSize
         global portalSpawn
+        global turniSpawnManifestazione
         self.map = Map()
         self.nodes = self.map.getAllNode()
         self.playerTarget = Player(playerx, playery)
@@ -27,8 +30,18 @@ class Enemy:
         self.maxMovement = 2
         self.remainingMovement = self.maxMovement
         self.turnToSpawn = portalSpawn
+        spawnX = np.random.random_integers(MapSize)
+        spawnY = np.random.random_integers(MapSize)
+        while self.nodes[spawnX][spawnY].getRoom() == 12:
+            spawnX = np.random.random_integers(MapSize)
+            spawnY = np.random.random_integers(MapSize)
+        self.nodes[spawnX][spawnY].setPortal(True)
+        self.spawnManifestazione()
+        self.spawnManifestazione()
+        self.maxEvent = True
+        self.turnToSpawnMan = turniSpawnManifestazione
 
-    # aggiorna la posizione del giocatore sulla base delle coordinate date
+    # aggiorna la posizione del giocatore sulla base delle coordinate date DA GESTIRE MANIFESTAZIONI E CHIUSURA PORTALI
     def updatePlayerPos(self, playerx, playery):
         self.playerTarget.position(playerx, playery)
         self.move1 = True
@@ -147,6 +160,11 @@ class Enemy:
                                             if n.getx() != spawnX or n.gety() != spawnY:
                                                 self.nodes[n.getx()][n.gety()].addNeighbour(self.nodes[spawnX][spawnY])
                                                 self.nodes[spawnX][spawnY].addNeighbour(self.nodes[n.getx()][n.gety()])
+                    if not self.maxEvent:  #
+                        self.turnToSpawnMan -= 1
+                        if self.turnToSpawnMan == 0:
+                            self.spawnManifestazione()
+                            self.maxEvent = True
                 if self.tileX == self.playerTarget.getX() and self.tileY == self.playerTarget.getY():  # se ho raggiunto il giocatore, il nemico non si muove più e si teletrasporta ad almeno sei caselle di distanza. il ciocatore perde fede
                     self.remainingMovement = 0
                     distance = False
@@ -167,3 +185,25 @@ class Enemy:
 
     def getPos(self):
         return self.tileY * self.MapSize + self.tileX
+
+    def spawnManifestazione(self):
+        spawn = False
+        spawnX = -1
+        spawnY = -1
+        while not spawn:
+            spawn = True
+            spawnX = np.random.random_integers(MapSize)
+            spawnY = np.random.random_integers(MapSize)
+            for n in self.nodes:
+                if n.getRoom() == self.nodes[spawnX][spawnY] or self.nodes[spawnX][spawnY].getRoom() == \
+                        self.nodes[self.playerTarget.getX()][self.playerTarget.getY()].getRoom():
+                    spawn = False
+        self.nodes[spawnX][spawnY].setManifestazione(True)
+
+    def getNodes(self):
+        return self.nodes
+
+    def risolviManifestazione(self, x, y):
+        self.nodes[x][y].setManifestazione(False)
+        self.maxEvent = False
+        self.turnToSpawnMan = self.turniSpawnManifestazione
