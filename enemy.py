@@ -56,23 +56,23 @@ class Enemy:
     # crea una struttura basandosi sui nodi vicini
     def GeneratePathfindingGraph(self):
         # Now that all the nodes exist, calculate their neighbours
-        for x in range(MapSize):
-            for y in range(MapSize):
+        for x in range(15):
+            for y in range(15):
                 if x > 0:
                     self.nodes[x][y].addNeighbour(self.nodes[x - 1][y])
                     if y > 0:
                         self.nodes[x][y].addNeighbour(self.nodes[x - 1][y - 1])
-                    if y < MapSize - 1:
+                    if y < 15 - 1:
                         self.nodes[x][y].addNeighbour(self.nodes[x - 1][y + 1])
-                if x < MapSize - 1:
+                if x < 15 - 1:
                     self.nodes[x][y].addNeighbour(self.nodes[x + 1][y])
                     if y > 0:
                         self.nodes[x][y].addNeighbour(self.nodes[x + 1][y - 1])
-                    if y < MapSize - 1:
+                    if y < 15 - 1:
                         self.nodes[x][y].addNeighbour(self.nodes[x + 1][y + 1])
                 if y > 0:
                     self.nodes[x][y].addNeighbour(self.nodes[x][y - 1])
-                if y < MapSize - 1:
+                if y < 15 - 1:
                     self.nodes[x][y].addNeighbour(self.nodes[x][y + 1])
 
     # cambia lo stato del nemico cosi che puo muoversi
@@ -151,8 +151,8 @@ class Enemy:
                         self.turnToSpawn = self.portalSpawn
                         spawned = False
                         while not spawned:  # finche non viene spawnato genero coordinate e verifico che non siano in una stanza con gia un portale
-                            spawnX = np.random.random_integers(self.MapSize)
-                            spawnY = np.random.random_integers(self.MapSize)
+                            spawnX = np.random.random_integers(15)
+                            spawnY = np.random.random_integers(15)
                             if not self.nodes[spawnX][
                                 spawnY].getPortal():  # se le coordinate non hanno gia un portale, controllo se non ce n'e un altro nella stanza
                                 stanza = self.nodes[spawnX][spawnY].getRoom()
@@ -176,8 +176,8 @@ class Enemy:
                     self.remainingMovement = 0
                     distance = False
                     while not distance:
-                        newX = np.random.random_integers(self.MapSize)
-                        newY = np.random.random_integers(self.MapSize)
+                        newX = np.random.random_integers(15)
+                        newY = np.random.random_integers(15)
                         if np.abs(self.tileX - newX) >= 6 or np.abs(self.tileY - newY):
                             distance = True
                             self.tileX = newX
@@ -191,7 +191,7 @@ class Enemy:
         return self.tileY
 
     def getPos(self):
-        return self.tileY * self.MapSize + self.tileX
+        return self.tileY * 15 + self.tileX
 
     def spawnManifestazione(self):
         spawn = False
@@ -199,8 +199,8 @@ class Enemy:
         spawnY = -1
         while not spawn:
             spawn = True
-            spawnX = np.random.random_integers(MapSize)
-            spawnY = np.random.random_integers(MapSize)
+            spawnX = np.random.random_integers(15)
+            spawnY = np.random.random_integers(15)
             for n in self.nodes:
                 if n.getRoom() == self.nodes[spawnX][spawnY] or self.nodes[spawnX][spawnY].getRoom() == \
                         self.nodes[self.playerTarget.getX()][self.playerTarget.getY()].getRoom():
