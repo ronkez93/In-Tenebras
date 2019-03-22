@@ -23,6 +23,8 @@ int delayval = 100; // delay for half a second
 int n=0;
 int oldPixelnum=-1;
 String inputString="";
+int pixelcolor=0;
+String color="";
 
 void setup() {
   //rfid
@@ -45,13 +47,17 @@ void setup() {
 void loop() {
   n=0;
   if(Serial.available()>0){
-	  inputString=Serial.readString();
+	  inputString=Serial.readStringUntil(",");
+    color=Serial.readStringUntil("\n");
     if (inputString != ""){
         n = inputString.toInt();
     }
+    if (color != ""){
+      pixelcolor=color.toInt();
+    }
 	  Serial.print("ho letto: ");
 	  Serial.println(n);
-	  pixel(n);
+	  pixel(n,pixelcolor);
 	  sendPositionToNextion();
     rfid();
   }
@@ -59,14 +65,27 @@ void loop() {
   ledoff();
 }
 
-void pixel(int num){    //funzione gestore dei pixel
+void pixel(int num, int pc){    //funzione gestore dei pixel
   
   // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
   // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
   if(num != oldPixelnum)
   {
+    switch (pc){
+      case 0:
+          pixels.setPixelColor(num, pixels.Color(90,0,0));
+          break;
+       case 1:
+          pixels.setPixelColor(num, pixels.Color(150,0,0));
+          break;
+       case 2:
+          pixels.setPixelColor(num, pixels.Color(0,60,120));
+          break;
+       case 3:
+          pixels.setPixelColor(num, pixels.Color(180,160,120));
+      }
     pixels.setPixelColor(oldPixelnum, pixels.Color(0,0,0));
-    pixels.setPixelColor(num, pixels.Color(90,0,0));
+    
     oldPixelnum=num;
   }
   // Moderately bright green color.
