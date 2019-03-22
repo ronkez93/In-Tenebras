@@ -23,8 +23,8 @@ class Enemy:
         self.tileX = np.random.random_integers(15)
         self.tileY = np.random.random_integers(15)
 
-        print("x: "+self.tileX)
-        print("y :"+self.tileY)
+        print(self.tileX)
+        print(self.tileY)
         while self.playerTarget.distanceTo(self.tileX, self.tileY) < 7:
             print(self.playerTarget.distanceTo(self.tileX, self.tileY))
             print(self.tileX)
