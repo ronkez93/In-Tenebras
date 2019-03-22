@@ -98,7 +98,7 @@ try:
                     # print('{}{}{}{}'.format('sei in posizione ', i , ' , ', n + 8))
                     num = (i + 8) + n * 15
                     # print(str((i + 8) * 15 + n + 1))
-                    posPlayerX = i
+                    posPlayerX = i + 8
                     posPlayerY = n
             if posPlayerX == initPosX and posPlayerY == initPosY:
                 playerOnBoard = True
