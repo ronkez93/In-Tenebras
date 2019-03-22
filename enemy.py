@@ -201,8 +201,7 @@ class Enemy:
             spawnX = np.random.random_integers(15)
             spawnY = np.random.random_integers(15)
             for n in self.nodes:
-                if n.getRoom() == self.nodes[spawnX][spawnY] or self.nodes[spawnX][spawnY].getRoom() == \
-                        self.nodes[self.playerTarget.getX()][self.playerTarget.getY()].getRoom():
+                if n.getRoom() == self.nodes[spawnX][spawnY] or self.nodes[spawnX][spawnY].roomID == self.nodes[self.playerTarget.getX()][self.playerTarget.getY()].roomID:
                     spawn = False
         self.nodes[spawnX][spawnY].setManifestazione(True)
 
