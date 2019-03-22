@@ -88,20 +88,21 @@ try:
             #    			print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
             for i in range(len(values)):
                 if values[i] > 1000:
-                    print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
+                    # print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
                     num = i + n *15
-                    print(str(i * 15 + n + 1))
+                    # print(str(i * 15 + n + 1))
                     posPlayerX = i
                     posPlayerY = n
             for i in range(len(values2)):
                 if values2[i] > 1000:
-                    print('{}{}{}{}'.format('sei in posizione ', i , ' , ', n + 8))
+                    # print('{}{}{}{}'.format('sei in posizione ', i , ' , ', n + 8))
                     num = (i + 8) + n * 15
-                    print(str((i + 8) * 15 + n + 1))
+                    # print(str((i + 8) * 15 + n + 1))
                     posPlayerX = i
                     posPlayerY = n
             if posPlayerX == initPosX and posPlayerY == initPosY:
                 playerOnBoard = True
+                print("ciao giocatore")
                 player = Player(posPlayerX, posPlayerY)
                 nemico = Enemy(posPlayerX, posPlayerY)
                 ser.write(str(initPosY * 15 + initPosX) + ",5")  # spegne led
@@ -180,7 +181,7 @@ try:
             nemico.setMove()
             nemico.updatePlayerPos(player.getX(), player.getY())
             nemico.update()
-            ser.write(str(nemico.getPos()))
+            ser.write(str(nemico.getPos()+",1"))
         if count == 100:
             ser.flushInput()
             count = 0
