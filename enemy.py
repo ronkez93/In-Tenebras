@@ -18,8 +18,8 @@ class Enemy:
         self.map = Map.Map()
         self.nodes = self.map.getAllNode()
         self.playerTarget = player.Player()
-        self.playerTarget.setX(7)
-        self.playerTarget.setY(14)
+        self.playerTarget.x=7
+        self.playerTarget.y=14
         self.tileX = np.random.random_integers(15)
         self.tileY = np.random.random_integers(15)
 
