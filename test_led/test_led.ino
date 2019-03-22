@@ -12,7 +12,7 @@
 
 #define PIN 7
 // How many NeoPixels are attached to the Arduino?
-#define NUMPIXELS 4
+#define NUMPIXELS 225
 // When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals. 
 // Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest 
 // example for more information on possible values. 
@@ -22,6 +22,7 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 int delayval = 100; // delay for half a second 
 int n=0;
 int oldPixelnum=-1;
+String inputString="";
 
 void setup() {
   //rfid
@@ -44,12 +45,12 @@ void setup() {
 void loop() {
   n=0;
   if(Serial.available()>0){
-	  n=Serial.read();
-    /*if (n != ""){
-        pixelColor = Serial.readStringUntil('\n');
-    }*/
-	  //Serial.print("ho letto: ");
-	  //Serial.println(n);
+	  inputString=Serial.readString();
+    if (inputString != ""){
+        n = inputString.toInt();
+    }
+	  Serial.print("ho letto: ");
+	  Serial.println(n);
 	  pixel(n);
 	  sendPositionToNextion();
     rfid();
@@ -60,10 +61,6 @@ void loop() {
 
 void pixel(int num){    //funzione gestore dei pixel
   
-  num=num-48;
-  if (num>7){
-    num=1;
-  }
   // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
   // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
   if(num != oldPixelnum)

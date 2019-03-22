@@ -68,7 +68,7 @@ class Enemy:
                 if y < MapSize - 1:
                     self.nodes[x][y].addNeighbour(self.nodes[x][y + 1])
 
-    # cambia lo stato del nemico così che può muoversi
+    # cambia lo stato del nemico cosi che puo muoversi
     def setMove(self):
         self.move1 = True
 
@@ -108,7 +108,7 @@ class Enemy:
         cpath.reverse()
         self.currentpath = cpath
 
-    # chiede se la cella alle coordinate passate è anche la cella di un portale
+    # chiede se la cella alle coordinate passate e anche la cella di un portale
     def onPortal(self, x, y):
         return self.nodes[x][y].getPortal()
 
@@ -126,9 +126,9 @@ class Enemy:
 
     # turno del nemico
     def update(self):
-        while self.move1:  # finchè tocca al nemico creo il percorso fino al giocatore
+        while self.move1:  # finche tocca al nemico creo il percorso fino al giocatore
             self.generatepathto(self.playerTarget.getX(), self.playerTarget.getY())
-            if self.currentpath is not None:  # se non sono sul giocatore il nemico si muove finchè può
+            if self.currentpath is not None:  # se non sono sul giocatore il nemico si muove finche puo
                 self.remainingMovement -= self.map.costToEnter(self.tileX, self.tileY, self.currentpath[1].getx(),
                                                                self.currentpath[1].gety())
                 self.tileX = self.currentpath[1].getx()
@@ -140,14 +140,14 @@ class Enemy:
                     self.move1 = False
                     self.remainingMovement = self.maxMovement
                     self.turnToSpawn -= 1
-                    if self.turnToSpawn == 0:  # se è il momento di spawnare un portale
+                    if self.turnToSpawn == 0:  # se e il momento di spawnare un portale
                         self.turnToSpawn = self.portalSpawn
                         spawned = False
-                        while not spawned:  # finchè non viene spawnato genero coordinate e verifico che non siano in una stanza con già un portale
+                        while not spawned:  # finche non viene spawnato genero coordinate e verifico che non siano in una stanza con gia un portale
                             spawnX = np.random.random_integers(self.MapSize)
                             spawnY = np.random.random_integers(self.MapSize)
                             if not self.nodes[spawnX][
-                                spawnY].getPortal():  # se le coordinate non hanno già un portale, controllo se non ce n'è un altro nella stanza
+                                spawnY].getPortal():  # se le coordinate non hanno gia un portale, controllo se non ce n'e un altro nella stanza
                                 stanza = self.nodes[spawnX][spawnY].getRoom()
                                 spawned = True
                                 for n in self.nodes:
@@ -165,7 +165,7 @@ class Enemy:
                         if self.turnToSpawnMan == 0:
                             self.spawnManifestazione()
                             self.maxEvent = True
-                if self.tileX == self.playerTarget.getX() and self.tileY == self.playerTarget.getY():  # se ho raggiunto il giocatore, il nemico non si muove più e si teletrasporta ad almeno sei caselle di distanza. il ciocatore perde fede
+                if self.tileX == self.playerTarget.getX() and self.tileY == self.playerTarget.getY():  # se ho raggiunto il giocatore, il nemico non si muove piu e si teletrasporta ad almeno sei caselle di distanza. il ciocatore perde fede
                     self.remainingMovement = 0
                     distance = False
                     while not distance:
@@ -207,3 +207,4 @@ class Enemy:
         self.nodes[x][y].setManifestazione(False)
         self.maxEvent = False
         self.turnToSpawnMan = self.turniSpawnManifestazione
+

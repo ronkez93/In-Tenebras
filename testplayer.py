@@ -7,7 +7,7 @@ import time
 # Import SPI library (for hardware SPI) and MCP3008 library.
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
-from .enemy import Enemy
+import enemy
 from .player import Player
 
 # inport GPIO library
@@ -152,7 +152,7 @@ try:
                     if playerOnBoard and (posPlayerX != oldPosx or posPlayerY != oldPosy):
 
                         #####################################################
-                        #   inserire controllo validità casella             #
+                        #   inserire controllo validita casella             #
                         #####################################################
                         playerEndTurn = True
                     else:
