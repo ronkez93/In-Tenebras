@@ -4,6 +4,7 @@ import enemy
 import Map
 import numpy as np
 import csv
+import math
 
 
 class Player:
@@ -30,7 +31,7 @@ class Player:
         self.y = y
 
     def distanceTo(self, x, y):
-        return int(np.sqrt((x - self.x) ^ 2 + (y - self.y) ^ 2))
+        return int(math.sqrt(abs(x - self.x) ^ 2 + abs(y - self.y) ^ 2))
 
     def getX(self):
         return self.x
