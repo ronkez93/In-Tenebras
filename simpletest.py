@@ -89,6 +89,7 @@ try:
                     print(str(i * 15 + n + 1))
                     # Pause for half a second.
                     ser.write(str(num))
+            print('{}{}'.format('num=',num))
             ser.write(str(num+1))
             time.sleep(0.1)
             GPIO.output(p, 0)
