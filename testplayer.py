@@ -8,7 +8,7 @@ import time
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 import enemy
-from .player import Player
+import player
 
 # inport GPIO library
 import numpy as np
@@ -35,12 +35,23 @@ SPI_DEVICE = 1
 mcp2 = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 GPIO.setmode(GPIO.BCM)  # choose BCM or BOARD
-GPIO.setup(22, GPIO.OUT)  # set GPIO24 as an output
+GPIO.setup(2, GPIO.OUT)  # set GPIO24 as an output
+GPIO.setup(3, GPIO.OUT)
+GPIO.setup(4, GPIO.OUT)
+GPIO.setup(14, GPIO.OUT)
+GPIO.setup(15, GPIO.OUT)
 GPIO.setup(17, GPIO.OUT)
+GPIO.setup(18, GPIO.OUT)
+GPIO.setup(27, GPIO.OUT)
+GPIO.setup(22, GPIO.OUT)
+GPIO.setup(23, GPIO.OUT)
 GPIO.setup(24, GPIO.OUT)
-GPIO.setup(23, GPIO.OUT)  # aggiungere tutti gli altri pin: 15 totali finali
+GPIO.setup(25, GPIO.OUT)
+GPIO.setup(5, GPIO.OUT)
+GPIO.setup(6, GPIO.OUT)
+GPIO.setup(12, GPIO.OUT)  # aggiungere tutti gli altri pin: 15 totali finali
 
-gpioPin = [22, 17, 24, 23]  # aggiungerli anche qua
+gpioPin = [2, 3, 4, 14, 15, 17, 18, 27, 22, 23, 24, 25, 5, 6, 12]
 ser = serial.Serial('/dev/ttyACM0', 9600)
 print('Reading MCP3008 values, press Ctrl-C to quit...')
 print('partenza del ciclo di lettura della posizione')
@@ -78,15 +89,15 @@ try:
             for i in range(len(values)):
                 if values[i] > 1000:
                     print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
-                    num = i * 4 + n
-                    print(str(i * 4 + n + 1))
+                    num = i + n *15
+                    print(str(i * 15 + n + 1))
                     posPlayerX = i
                     posPlayerY = n
             for i in range(len(values2)):
                 if values2[i] > 1000:
                     print('{}{}{}{}'.format('sei in posizione ', i , ' , ', n + 8))
-                    num = i * 4 + n
-                    print(str(i * 4 + n + 1))
+                    num = (i + 8) + n * 15
+                    print(str((i + 8) * 15 + n + 1))
                     posPlayerX = i
                     posPlayerY = n
             if posPlayerX == initPosX and posPlayerY == initPosY:
