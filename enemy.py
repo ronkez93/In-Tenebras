@@ -20,8 +20,8 @@ class Enemy:
         self.playerTarget = player.Player()
         self.playerTarget.setX(7)
         self.playerTarget.setY(14)
-        self.tileX = np.random.random_integers(MapSize)
-        self.tileY = np.random.random_integers(MapSize)
+        self.tileX = np.random.random_integers(15)
+        self.tileY = np.random.random_integers(15)
         while self.playerTarget.distanceTo(self.tileX, self.tileY) < 7:
             self.tileX = np.random.random_integers(MapSize)
             self.tileY = np.random.random_integers(MapSize)
