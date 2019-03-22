@@ -100,6 +100,8 @@ try:
                     # print(str((i + 8) * 15 + n + 1))
                     posPlayerY = i + 8
                     posPlayerX = n
+                    print(posPlayerX)
+                    print(posPlayerY)
             if posPlayerX == initPosX and posPlayerY == initPosY:
                 playerOnBoard = True
                 print("ciao giocatore")
