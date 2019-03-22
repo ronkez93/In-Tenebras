@@ -1,6 +1,6 @@
 # player class
-from .node import Node
-from .enemy import Enemy
+import node
+import enemy
 import Map
 import numpy as np
 import csv
