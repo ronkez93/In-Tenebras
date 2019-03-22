@@ -33,12 +33,23 @@ SPI_DEVICE = 1
 mcp2 = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
 
 GPIO.setmode(GPIO.BCM)  # choose BCM or BOARD
-GPIO.setup(22, GPIO.OUT)  # set GPIO24 as an output
+GPIO.setup(2, GPIO.OUT)  # set GPIO24 as an output
+GPIO.setup(3, GPIO.OUT)
+GPIO.setup(4, GPIO.OUT)
+GPIO.setup(14, GPIO.OUT)
+GPIO.setup(15, GPIO.OUT)
 GPIO.setup(17, GPIO.OUT)
-GPIO.setup(24, GPIO.OUT)
+GPIO.setup(18, GPIO.OUT)
+GPIO.setup(27, GPIO.OUT)
+GPIO.setup(22, GPIO.OUT)
 GPIO.setup(23, GPIO.OUT)
+GPIO.setup(24, GPIO.OUT)
+GPIO.setup(25, GPIO.OUT)
+GPIO.setup(5, GPIO.OUT)
+GPIO.setup(6, GPIO.OUT)
+GPIO.setup(12, GPIO.OUT)
 
-gpioPin = [22, 17, 24, 23]
+gpioPin = [2, 3, 4, 14, 15, 17, 18, 27, 22, 23, 24, 25, 5, 6, 12]
 ser = serial.Serial('/dev/ttyACM0', 9600)
 print('Reading MCP3008 values, press Ctrl-C to quit...')
 # Print nice channel column headers.
@@ -55,19 +66,23 @@ try:
             GPIO.output(p, 1)
             # Read all the ADC channel values in a list.
             values = [0] * 8
-            values2 = [0] * 8
+            values2 = [0] * 7
             for i in range(8):
                 # The read_adc function will get the value of the specified channel (0-7).
                 values[i] = mcp.read_adc(i)
+	    for i in range(7):
                 values2[i] = mcp2.read_adc(i)
             # Print the ADC values.
             # results = np.append(values, values2, axis=0)
             #    			print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
-            for i in range(len(values2)):
+           for i in range(len(values)):
+		if values[i]>1000:
+			num 
+	   for i in range(len(values2)):
                 if values2[i] > 1000:
                     print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
-                    num = i * 4 + n
-                    print(str(i * 4 + n + 1))
+                    num = i * 15 + n
+                    print(str(i * 15 + n + 1))
                     # Pause for half a second.
                     ser.write(str(num))
 		    ser.write(str(num+1))
