@@ -8,9 +8,9 @@ import csv
 
 class Player:
 
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+    def __init__(self):
+        self.x = 0
+        self.y = 0
         self.fede = 5
         self.stamina = 5
         self.map = Map()
