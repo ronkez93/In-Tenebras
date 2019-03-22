@@ -103,7 +103,7 @@ try:
             if posPlayerX == initPosX and posPlayerY == initPosY:
                 playerOnBoard = True
                 print("ciao giocatore")
-                player = Player(posPlayerX, posPlayerY)
+                player = player.Player(posPlayerX, posPlayerY)
                 nemico = Enemy(posPlayerX, posPlayerY)
                 ser.write(str(initPosY * 15 + initPosX) + ",5")  # spegne led
             GPIO.output(p, 0)
