@@ -46,10 +46,10 @@ void setup() {
 void loop() {
   n=0;
   if(Serial.available()>0){
-	  n=Serial.readStringUntil(',');
-    if (n != ""){
+	  n=Serial.read();
+    /*if (n != ""){
         pixelColor = Serial.readStringUntil('\n');
-    }
+    }*/
 	  //Serial.print("ho letto: ");
 	  //Serial.println(n);
 	  pixel(n);

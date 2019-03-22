@@ -7,7 +7,7 @@ import time
 # Import SPI library (for hardware SPI) and MCP3008 library.
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
-from .enemy import Enemy
+# from .enemy import Enemy
 # inport GPIO library
 import numpy as np
 import RPi.GPIO as GPIO  # import RPi.GPIO module
@@ -70,6 +70,7 @@ try:
                     print(str(i * 4 + n + 1))
                     # Pause for half a second.
                     ser.write(str(num))
+		    ser.write(str(num+1))
             time.sleep(0.1)
             GPIO.output(p, 0)
         if count == 100:
