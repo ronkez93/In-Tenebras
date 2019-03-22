@@ -152,7 +152,7 @@ try:
                     if playerOnBoard and (posPlayerX != oldPosx or posPlayerY != oldPosy):
 
                         #####################################################
-                        #   inserire controllo validità casella             #
+                        #   inserire controllo validita casella             #
                         #####################################################
                         playerEndTurn = True
                     else:
