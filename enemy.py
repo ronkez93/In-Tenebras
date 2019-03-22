@@ -7,13 +7,12 @@ import math
 
 
 class Enemy:
-    MapSize = 15
-    portalSpawn = 4
-    turniSpawnManifestazione = 4
+
 
     def __init__(self):  # inizializzazione: posizione nemico, posizione giocatore, spawn 2 eventi e portale
-        global MapSize
-        global portalSpawn
+        self.MapSize = 15
+        self.portalSpawn = 4
+        self.turniSpawnManifestazione = 4
         global turniSpawnManifestazione
         self.map = Map.Map()
         self.nodes = self.map.getAllNode()
@@ -36,17 +35,17 @@ class Enemy:
         self.currentpath = []
         self.maxMovement = 2
         self.remainingMovement = self.maxMovement
-        self.turnToSpawn = portalSpawn
-        spawnX = np.random.random_integers(MapSize)
-        spawnY = np.random.random_integers(MapSize)
+        self.turnToSpawn = self.portalSpawn
+        spawnX = np.random.random_integers(self.MapSize)
+        spawnY = np.random.random_integers(self.MapSize)
         while self.nodes[spawnX][spawnY].getRoom() == 12:
-            spawnX = np.random.random_integers(MapSize)
-            spawnY = np.random.random_integers(MapSize)
+            spawnX = np.random.random_integers(self.MapSize)
+            spawnY = np.random.random_integers(self.MapSize)
         self.nodes[spawnX][spawnY].setPortal(True)
         self.spawnManifestazione()
         self.spawnManifestazione()
         self.maxEvent = True
-        self.turnToSpawnMan = turniSpawnManifestazione
+        self.turnToSpawnMan = self.turniSpawnManifestazione
 
     # aggiorna la posizione del giocatore sulla base delle coordinate date DA GESTIRE MANIFESTAZIONI E CHIUSURA PORTALI
     def updatePlayerPos(self, playerx, playery):
