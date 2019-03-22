@@ -16,12 +16,12 @@ class Player:
         self.map = Map.Map()
         self.roomID = self.map.allNode[self.x][self.y].roomID
         self.pathfindingGraph = self.map.getAllNode()       # grafo pathfinding giocatore
-        with open('grafo.txt') as csv_file:
-            csv_reader = csv.reader(csv_file, delimiter=',')
-            for row in csv_reader:
-                for i in range(1,8):
-                    if row[i]!=-1:
-                        self.pathfindingGraph[row[0]%15][np.floor_divide(row[0],15)].addNeighbour(self.pathfindingGraph[row[i]%15][np.floor_divide(row[i],15)])
+        # with open('grafo.txt') as csv_file:
+          #  csv_reader = csv.reader(csv_file, delimiter=',')
+           # for row in csv_reader:
+            #    for i in range(1,8):
+             #       if row[i]!=-1:
+              #          self.pathfindingGraph[row[0],15][np.floor_divide(row[0],15)].addNeighbour(self.pathfindingGraph[row[i]%15][np.floor_divide(row[i],15)])
 
 
 
