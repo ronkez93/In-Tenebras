@@ -47,8 +47,8 @@ void setup() {
 void loop() {
   n=0;
   if(Serial.available()>0){
-	  inputString=Serial.readStringUntil(",");
-    color=Serial.readStringUntil("\n");
+	  inputString=Serial.readStringUntil(',');
+    color=Serial.readStringUntil('\n');
     if (inputString != ""){
         n = inputString.toInt();
     }
@@ -57,6 +57,8 @@ void loop() {
     }
 	  Serial.print("ho letto: ");
 	  Serial.println(n);
+    Serial.print("colore: ");
+    Serial.println(pixelcolor);
 	  pixel(n,pixelcolor);
 	  sendPositionToNextion();
     rfid();
