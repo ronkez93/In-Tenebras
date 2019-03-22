@@ -61,6 +61,7 @@ num = 0
 count = 0;
 try:
     while True:
+	num=-1
         count += 1
         for n, p in enumerate(gpioPin):
             GPIO.output(p, 1)
@@ -73,24 +74,24 @@ try:
             for i in range(7):
                 values2[i] = mcp2.read_adc(i)
             # Print the ADC values.
-            results = np.append(values, values2, axis=0)
-            print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
+            # results = np.append(values, values2, axis=0)
+            # print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
             for i in range(len(values)):
                 if values[i] > 1000:
                     print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
-                    num = i * 15 + n
+                    num = i + n * 15
                     print(str(i * 15 + n + 1))
                     # Pause for half a second.
                     ser.write(str(num))
             for i in range(len(values2)):
                 if values2[i] > 1000:
                     print('{}{}{}{}'.format('sei in posizione ', (i + 8), ' , ', n))
-                    num = (i + 8)* 15 + n
-                    print(str(i * 15 + n + 1))
+                    num = (i + 8) + n * 15
+                    print(str((i + 8) * 15 + n + 1))
                     # Pause for half a second.
                     ser.write(str(num))
-            print('{}{}'.format('num=',num))
-            ser.write(str(num+1))
+            # print('{}{}'.format('num=',num))
+            # ser.write(str(num))
             time.sleep(0.1)
             GPIO.output(p, 0)
         if count == 100:
