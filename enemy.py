@@ -22,9 +22,9 @@ class Enemy:
         self.playerTarget.setY(14)
         self.tileX = np.random.random_integers(15)
         self.tileY = np.random.random_integers(15)
-        print("provo a trovare una osizione valida")
-        print(self.tileX)
-        print(self.tileY)
+
+        print("x: "+self.tileX)
+        print("y :"+self.tileY)
         while self.playerTarget.distanceTo(self.tileX, self.tileY) < 7:
             print(self.playerTarget.distanceTo(self.tileX, self.tileY))
             print(self.tileX)
