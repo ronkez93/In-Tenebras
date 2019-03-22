@@ -64,7 +64,7 @@ posPlayerY = -1
 playerOnBoard = False
 playerEndTurn = False
 player = player.Player()
-nemico = None
+nemico = enemy.Enemy()
 initPosX = 7
 initPosY = 14
 try:
