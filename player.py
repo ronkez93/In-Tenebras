@@ -1,7 +1,7 @@
 # player class
 from .node import Node
 from .enemy import Enemy
-from .Map import Map
+import Map
 import numpy as np
 import csv
 

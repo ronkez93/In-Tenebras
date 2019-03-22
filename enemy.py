@@ -1,7 +1,7 @@
 # enemy class
-from .player import Player
-from .node import Node
-from .Map import Map
+import player
+import node
+import Map
 import numpy as np
 import math
 

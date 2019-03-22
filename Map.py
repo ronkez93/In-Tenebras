@@ -1,4 +1,4 @@
-from .node import Node
+import node
 import numpy as np
 
 
