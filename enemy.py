@@ -23,8 +23,8 @@ class Enemy:
         self.tileX = np.random.random_integers(15)
         self.tileY = np.random.random_integers(15)
         while self.playerTarget.distanceTo(self.tileX, self.tileY) < 7:
-            self.tileX = np.random.random_integers(MapSize)
-            self.tileY = np.random.random_integers(MapSize)
+            self.tileX = np.random.random_integers(15)
+            self.tileY = np.random.random_integers(15)
         self.move1 = False
         self.GeneratePathfindingGraph()
         self.currentpath = []
