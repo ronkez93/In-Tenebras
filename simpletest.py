@@ -70,22 +70,26 @@ try:
             for i in range(8):
                 # The read_adc function will get the value of the specified channel (0-7).
                 values[i] = mcp.read_adc(i)
-	    for i in range(7):
+            for i in range(7):
                 values2[i] = mcp2.read_adc(i)
             # Print the ADC values.
             # results = np.append(values, values2, axis=0)
             #    			print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
-           for i in range(len(values)):
-		if values[i]>1000:
-			num 
-	   for i in range(len(values2)):
-                if values2[i] > 1000:
+            for i in range(len(values)):
+                if values[i] > 1000:
                     print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
                     num = i * 15 + n
                     print(str(i * 15 + n + 1))
                     # Pause for half a second.
                     ser.write(str(num))
-		    ser.write(str(num+1))
+            for i in range(len(values2)):
+                if values2[i] > 1000:
+                    print('{}{}{}{}'.format('sei in posizione ', (i + 8), ' , ', n))
+                    num = (i + 8)* 15 + n
+                    print(str(i * 15 + n + 1))
+                    # Pause for half a second.
+                    ser.write(str(num))
+            ser.write(str(num+1))
             time.sleep(0.1)
             GPIO.output(p, 0)
         if count == 100:
