@@ -92,14 +92,18 @@ try:
                     num = i + n *15
                     # print(str(i * 15 + n + 1))
                     posPlayerX = i
+                    print(str(posPlayerX))
                     posPlayerY = n
+                    print(str(posPlayerY))
             for i in range(len(values2)):
                 if values2[i] > 1000:
                     # print('{}{}{}{}'.format('sei in posizione ', i , ' , ', n + 8))
                     num = (i + 8) + n * 15
                     # print(str((i + 8) * 15 + n + 1))
                     posPlayerX = i + 8
+                    print(str(posPlayerX))
                     posPlayerY = n
+                    print(str(posPlayerY))
             if posPlayerX == initPosX and posPlayerY == initPosY:
                 playerOnBoard = True
                 print("ciao giocatore")
