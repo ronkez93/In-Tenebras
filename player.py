@@ -31,7 +31,7 @@ class Player:
         self.y = y
 
     def distanceTo(self, x, y):
-        return int(math.sqrt(x - self.x ^ 2 + y - self.y ^ 2))
+        return int(math.sqrt((x - self.x) ^ 2 + (y - self.y) ^ 2))
 
     def getX(self):
         return self.x
