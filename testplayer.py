@@ -118,7 +118,7 @@ try:
         count += 1
         nodes = nemico.getNodes()
         for n in nodes:
-            if n[player.getX()][player.getY()].getPortal:
+            if n[player.x][player.y].getPortal:
                 playerEndTurn = True
                 nemico.destroyPortal(player.getX(), player.getY())
             elif n[player.getX()][player.getY()].getManifestazione():
