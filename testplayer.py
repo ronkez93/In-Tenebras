@@ -28,10 +28,10 @@ def illuminaStanza():
                     print("scrivo demone")
                     ser.write(str(initPosY + initPosX * 15) + ",0")
                     sleep(0.1)
-                elif nodes[m][n].roomID == player.roomID:
-                    print("scrivo stanza")
-                    ser.write(str(initPosY + initPosX * 15) + ",3")
-                    sleep(0.1)
+            elif nodes[m][n].roomID == player.roomID:
+                print("scrivo stanza")
+                ser.write(str(initPosY + initPosX * 15) + ",3")
+                sleep(0.1)
 # Software SPI configuration:
 # CLK  = 23
 # MISO = 21
