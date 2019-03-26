@@ -98,8 +98,8 @@ class Enemy:
             if u == target:
                 break
             unvisited.remove(u)
-            for n in u.getNeighbour():
-                alt = dist[u] + self.map.costToEnter(u.getx, u.gety, n.getx, n.gety)
+            for n in u.neighbours:
+                alt = dist[u] + self.map.costToEnter(u.x, u.y, n.x, n.y)
                 if alt < dist[n]:
                     dist[n] = alt
                     prev[n] = u
@@ -115,15 +115,20 @@ class Enemy:
 
     # chiede se la cella alle coordinate passate e anche la cella di un portale
     def onPortal(self, x, y):
-        return self.nodes[x][y].getPortal()
+        return self.nodes[x][y].portal
 
     # funzione per distruggere un portale nella casella di coordinate passate
     def destroyPortal(self, x, y):
         self.nodes[x][y].setPortal(False)
-        for n in self.nodes:
-            if n.getx != x and n.gety != y and n.getPortal:
-                self.nodes[n.getx][n.gety].neighbours.remove(self.nodes[x][y])
-                self.nodes[x][y].neighbours.remove(self.nodes[n.getx][n.gety])
+        for n in range(len(self.nodes)):
+            for m in range(len(self.nodes[0])):
+                if self.nodes[n][m].portal and n != x and m !=y:
+                    self.nodes[n][m].neighbours.remove(self.nodes[x][y])
+                    self.nodes[x][y].neighbours.remove(self.nodes[n][m])
+        #for n in self.nodes:
+        #    if n.getx != x and n.gety != y and n.getPortal:
+        #        self.nodes[n.getx][n.gety].neighbours.remove(self.nodes[x][y])
+        #        self.nodes[x][y].neighbours.remove(self.nodes[n.getx][n.gety])
 
     # cambia il mannimo numero di movimenti a disposizione del nemico sulla base dei bpm del giocatore
     def setMaxMovement(self, MM):
@@ -132,12 +137,12 @@ class Enemy:
     # turno del nemico
     def update(self):
         while self.move1:  # finche tocca al nemico creo il percorso fino al giocatore
-            self.generatepathto(self.playerTarget.getX(), self.playerTarget.getY())
+            self.generatepathto(self.playerTarget.x, self.playerTarget.y)
             if self.currentpath is not None:  # se non sono sul giocatore il nemico si muove finche puo
-                self.remainingMovement -= self.map.costToEnter(self.tileX, self.tileY, self.currentpath[1].getx(),
-                                                               self.currentpath[1].gety())
-                self.tileX = self.currentpath[1].getx()
-                self.tileY = self.currentpath[1].gety()
+                self.remainingMovement -= self.map.costToEnter(self.tileX, self.tileY, self.currentpath[1].x,
+                                                               self.currentpath[1].y)
+                self.tileX = self.currentpath[1].x
+                self.tileY = self.currentpath[1].y
                 self.currentpath.pop(0)
                 if len(self.currentpath) == 1:  # se dopo essersi mosso sono arrivato al giocatore cancello il percorso
                     self.currentpath = None
@@ -204,8 +209,8 @@ class Enemy:
             print(len(self.nodes[0]))
             for n in range(len(self.nodes)):
                 for m in range(len(self.nodes[0])):
-                    if self.nodes[m][n].manifestazione:
-                        if self.nodes[m][n].roomID==self.nodes[spawnX][spawnY].roomID:
+                    if self.nodes[n][m].manifestazione:
+                        if self.nodes[n][m].roomID==self.nodes[spawnX][spawnY].roomID:
                             spawn=False
                     if self.playerTarget.distanceTo(spawnX,spawnY)<7:
                         spawn = False
@@ -217,7 +222,7 @@ class Enemy:
         return self.nodes
 
     def risolviManifestazione(self, x, y):
-        self.nodes[x][y].setManifestazione(False)
+        self.nodes[x][y].manifestazione=False
         self.maxEvent = False
         self.turnToSpawnMan = self.turniSpawnManifestazione
 

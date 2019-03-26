@@ -148,8 +148,8 @@ try:
             ######################################################################################
             nemico.risolviManifestazione(player.x, player.y)
         else:
-            oldPosx = player.getX()
-            oldPosy = player.getY()
+            oldPosx = player.x
+            oldPosy = player.y
             playerOnBoard = False
             ######################################################################################
             # inserire caso uso oggetto, riposo, cosra                                            #
@@ -171,18 +171,18 @@ try:
                     if values[i] > 1000:
                         playerOnBoard = True
                         print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
-                        num = i * 4 + n
-                        print(str(i * 4 + n + 1))
-                        posPlayerX = i
-                        posPlayerY = n
+                        num = i + n * 15
+                        print(str(i + n * 15))
+                        posPlayerY = i
+                        posPlayerX = n
                 for i in range(len(values2)):
                     if values2[i] > 1000:
                         playerOnBoard = True
                         print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n + 8))
-                        num = i * 4 + n
-                        print(str(i * 4 + n + 1))
-                        posPlayerX = i
-                        posPlayerY = n
+                        num = (i + 8) + n * 15
+                        print(str((i + 8) + n * 15))
+                        posPlayerY = i
+                        posPlayerX = n
                         # Pause for half a second.
                 if playerOnBoard and (posPlayerX != oldPosx or posPlayerY != oldPosy):
 
@@ -199,10 +199,10 @@ try:
                 GPIO.output(p, 0)
         if playerEndTurn:
             playerEndTurn = False
-            player.setX(posPlayerX)
-            player.setY(posPlayerY)
-            nemico.setMove()
-            nemico.updatePlayerPos(player.getX(), player.getY())
+            player.x=posPlayerX
+            player.y=posPlayerY
+            nemico.move1=True
+            nemico.updatePlayerPos(player.x, player.y)
             nemico.update()
             ser.write(str(nemico.getPos() + ",1"))
         if count == 100:
