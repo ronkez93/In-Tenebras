@@ -117,7 +117,7 @@ try:
                     posPlayerX = n
                     print(posPlayerX)
                     print(posPlayerY)
-            if posPlayerX == initPosX and posPlayerY == initPosY:
+            if posPlayerX == initPosX and posPlayerY == initPosY and not playerOnBoard:
                 playerOnBoard = True
                 print("ciao giocatore")
                 player.x=posPlayerX
