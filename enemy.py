@@ -199,6 +199,9 @@ class Enemy:
             spawn = True
             spawnX = np.random.random_integers(self.MapSize)
             spawnY = np.random.random_integers(self.MapSize)
+            print("dimensioni")
+            print(len(self.nodes))
+            print(len(self.nodes[0]))
             for n in range(len(self.nodes)):
                 for m in range(len(self.nodes[0])):
                     if self.nodes[m][n].roomID == self.nodes[spawnX][spawnY].roomID or self.nodes[spawnX][spawnY].roomID == self.nodes[self.playerTarget.x][self.playerTarget.y].roomID:
