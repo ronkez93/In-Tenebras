@@ -31,6 +31,7 @@ def illuminaStanza():
             elif nodes[m][n].roomID == player.roomID:
                 print("scrivo stanza")
                 string=string+(str(initPosY + initPosX * 15) + ",3;")
+    print(string)
     ser.write(string)
 # Software SPI configuration:
 # CLK  = 23
@@ -128,7 +129,8 @@ try:
                 # inserire illuminazione stanza
                 illuminaStanza()
             GPIO.output(p, 0)
-        time.sleep(10)
+        time.sleep(0.1)
+    time.sleep(10)
     #####################################################
     #   inserire controllo battito cardiaco             #
     #####################################################
