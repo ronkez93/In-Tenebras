@@ -189,7 +189,7 @@ class Enemy:
         return self.tileY
 
     def getPos(self):
-        return self.tileY * self.MapSize + self.tileX
+        return self.tileY + self.tileX * self.MapSize
 
     def spawnManifestazione(self):
         spawn = False
