@@ -32,7 +32,6 @@ class Player:
 
     def distanceTo(self, x, y):
         dist=math.sqrt(abs(x - self.x)**2 + abs(y - self.y)**2)
-        print (dist)
         return int(dist)
 
     def getX(self):

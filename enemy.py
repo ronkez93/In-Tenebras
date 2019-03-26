@@ -204,8 +204,13 @@ class Enemy:
             print(len(self.nodes[0]))
             for n in range(len(self.nodes)):
                 for m in range(len(self.nodes[0])):
-                    if self.nodes[m][n].roomID == self.nodes[spawnX][spawnY].roomID or self.nodes[spawnX][spawnY].roomID == self.nodes[self.playerTarget.x][self.playerTarget.y].roomID:
+                    if self.nodes[m][n].manifestazione:
+                        if self.nodes[m][n].roomID==self.nodes[spawnX][spawnY].roomID:
+                            spawn=False
+                    if self.playerTarget.distanceTo(spawnX,spawnY)<7:
                         spawn = False
+                    if self.nodes[spawnX][spawnY].portal:
+                        spawn=False
         self.nodes[spawnX][spawnY].manifestazione=True
 
     def getNodes(self):
