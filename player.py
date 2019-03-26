@@ -15,7 +15,7 @@ class Player:
         self.fede = 5
         self.stamina = 5
         self.map = Map.Map()
-        self.roomID = self.map.allNode[self.x][self.y].roomID()
+        self.roomID = self.map.allNode[self.x][self.y].roomID
         self.pathfindingGraph = self.map.getAllNode()       # grafo pathfinding giocatore
         # with open('grafo.txt') as csv_file:
           #  csv_reader = csv.reader(csv_file, delimiter=',')

@@ -37,7 +37,7 @@ class Enemy:
         self.turnToSpawn = self.portalSpawn
         spawnX = np.random.random_integers(self.MapSize)
         spawnY = np.random.random_integers(self.MapSize)
-        while self.nodes[spawnX][spawnY].roomID() == 12:
+        while self.nodes[spawnX][spawnY].roomID == 12:
             spawnX = np.random.random_integers(self.MapSize)
             spawnY = np.random.random_integers(self.MapSize)
         self.nodes[spawnX][spawnY].setPortal(True)
