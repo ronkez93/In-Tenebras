@@ -19,19 +19,19 @@ import serial  # importa libreria serial lettura valori usb
 
 def illuminaStanza():
     nodes = mappa.allNode
-    ser.write(str(nemico.getPos())+",1")
+    ser.write(str(nemico.getPos())+",1;")
     sleep(0.1)
+    string=""
     for n in range(len(nodes)):
         for m in range(len(nodes[0])):
             if player.roomID == nodes[nemico.tileX][nemico.tileY].roomID:
                 if nodes[m][n].roomID == player.roomID:
                     print("scrivo demone")
-                    ser.write(str(initPosY + initPosX * 15) + ",0")
-                    sleep(0.1)
+                    str=str+(str(initPosY + initPosX * 15) + ",0;")
             elif nodes[m][n].roomID == player.roomID:
                 print("scrivo stanza")
-                ser.write(str(initPosY + initPosX * 15) + ",3")
-                sleep(0.1)
+                str=str+(str(initPosY + initPosX * 15) + ",3;")
+    ser.write(str)
 # Software SPI configuration:
 # CLK  = 23
 # MISO = 21
@@ -87,7 +87,7 @@ mappa = Map.Map()
 try:
     # accende led
     ser.write(str(
-        initPosY + initPosX * 15) + ",3")  # inizializzazione del giocatore: deve venir posizionato sulla casella 217, e nemico
+        initPosY + initPosX * 15) + ",3;")  # inizializzazione del giocatore: deve venir posizionato sulla casella 217, e nemico
     # manca battito rilevato
     while not playerOnBoard:
         for n, p in enumerate(gpioPin):
