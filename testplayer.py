@@ -18,7 +18,7 @@ from time import sleep
 import serial  # importa libreria serial lettura valori usb
 
 def illuminaStanza():
-    nodes = mappa.getAllNodes()
+    nodes = mappa.allNode
     for n in range(len(nodes)):
         for m in range(len(nodes[0])):
             if player.roomID == nodes[nemico.tileX][nemico.tileY].roomID:
