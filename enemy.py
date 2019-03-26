@@ -200,7 +200,7 @@ class Enemy:
             spawnX = np.random.random_integers(self.MapSize)
             spawnY = np.random.random_integers(self.MapSize)
             for n in range(len(self.nodes)):
-                if self.nodes[n].roomID == self.nodes[spawnX][spawnY].roomID or self.nodes[spawnX][spawnY].roomID == self.nodes[self.playerTarget.getX()][self.playerTarget.getY()].roomID:
+                if self.nodes[math.floor(n%15)][math.floor(n/15)].roomID == self.nodes[spawnX][spawnY].roomID or self.nodes[spawnX][spawnY].roomID == self.nodes[self.playerTarget.x][self.playerTarget.y].roomID:
                     spawn = False
         self.nodes[spawnX][spawnY].setManifestazione(True)
 
