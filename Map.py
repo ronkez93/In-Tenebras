@@ -5,7 +5,7 @@ import numpy as np
 class Map:
 
     def __init__(self):
-        self.allNode = np.array([[node.Node() for j in range(15)] for i in range(15)], np.dtype(node.Node()))
+        self.allNode = [[node.Node() for j in range(15)] for i in range(15)]
         self.matrix = np.array([[1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4],
                                [1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4],
                                [2, 2, 2, 2, 2, 3, 3, 5, 5, 4, 4, 4, 4, 4, 4],
