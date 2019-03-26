@@ -116,6 +116,8 @@ try:
             if posPlayerX == initPosX and posPlayerY == initPosY:
                 playerOnBoard = True
                 print("ciao giocatore")
+                player.x=posPlayerX
+                player.y=posPlayerY
                 # inserire illuminazione stanza
                 illuminaStanza()
             GPIO.output(p, 0)
@@ -127,66 +129,67 @@ try:
         print("gestione turno giocatore")
         count += 1
         nodes = nemico.getNodes()
-        for n in nodes:
-            if n[player.x][player.y].portal:
-                playerEndTurn = True
-                nemico.destroyPortal(player.getX(), player.getY())
-            elif n[player.getX()][player.getY()].getManifestazione():
-                playerEndTurn = True
-                ######################################################################################
-                # inserire prova sensori per risoluzione manifestazione e gestione evento             #
-                ######################################################################################
-                nemico.risolviManifestazione(player.getX(), player.getY())
-            else:
-                oldPosx = player.getX()
-                oldPosy = player.getY()
-                playerOnBoard = False
-                ######################################################################################
-                # inserire caso uso oggetto, riposo, cosra                                            #
-                ######################################################################################
-                for n, p in enumerate(gpioPin):
-                    GPIO.output(p, 1)
-                    # Read all the ADC channel values in a list.
-                    values = [0] * 8
-                    values2 = [0] * 7
-                    for i in range(8):
-                        # The read_adc function will get the value of the specified channel (0-7).
-                        values[i] = mcp.read_adc(i)
-                    for i in range(7):
-                        values2[i] = mcp2.read_adc(i)
-                    # Print the ADC values.
-                    # results = np.append(values, values2, axis=0)
-                    #    			print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
-                    for i in range(len(values)):
-                        if values[i] > 1000:
-                            playerOnBoard = True
-                            print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
-                            num = i * 4 + n
-                            print(str(i * 4 + n + 1))
-                            posPlayerX = i
-                            posPlayerY = n
-                    for i in range(len(values2)):
-                        if values2[i] > 1000:
-                            playerOnBoard = True
-                            print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n + 8))
-                            num = i * 4 + n
-                            print(str(i * 4 + n + 1))
-                            posPlayerX = i
-                            posPlayerY = n
-                            # Pause for half a second.
-                    if playerOnBoard and (posPlayerX != oldPosx or posPlayerY != oldPosy):
+        for n in range(len(nodes)):
+            for m in range(len(nodes[0])):
+                if nodes[player.x][player.y].portal:
+                    playerEndTurn = True
+                    nemico.destroyPortal(player.getX(), player.getY())
+                elif n[player.getX()][player.getY()].getManifestazione():
+                    playerEndTurn = True
+                    ######################################################################################
+                    # inserire prova sensori per risoluzione manifestazione e gestione evento             #
+                    ######################################################################################
+                    nemico.risolviManifestazione(player.getX(), player.getY())
+                else:
+                    oldPosx = player.getX()
+                    oldPosy = player.getY()
+                    playerOnBoard = False
+                    ######################################################################################
+                    # inserire caso uso oggetto, riposo, cosra                                            #
+                    ######################################################################################
+                    for n, p in enumerate(gpioPin):
+                        GPIO.output(p, 1)
+                        # Read all the ADC channel values in a list.
+                        values = [0] * 8
+                        values2 = [0] * 7
+                        for i in range(8):
+                            # The read_adc function will get the value of the specified channel (0-7).
+                            values[i] = mcp.read_adc(i)
+                        for i in range(7):
+                            values2[i] = mcp2.read_adc(i)
+                        # Print the ADC values.
+                        # results = np.append(values, values2, axis=0)
+                        #    			print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
+                        for i in range(len(values)):
+                            if values[i] > 1000:
+                                playerOnBoard = True
+                                print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
+                                num = i * 4 + n
+                                print(str(i * 4 + n + 1))
+                                posPlayerX = i
+                                posPlayerY = n
+                        for i in range(len(values2)):
+                            if values2[i] > 1000:
+                                playerOnBoard = True
+                                print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n + 8))
+                                num = i * 4 + n
+                                print(str(i * 4 + n + 1))
+                                posPlayerX = i
+                                posPlayerY = n
+                                # Pause for half a second.
+                        if playerOnBoard and (posPlayerX != oldPosx or posPlayerY != oldPosy):
 
-                        #####################################################
-                        #   inserire controllo validita casella             #
-                        #####################################################
-                        playerEndTurn = True
-                    else:
-                        #####################################################
-                        #   controllo uso oggetto? riposo?                  #
-                        #####################################################
-                        playerEndTurn = False
-                    time.sleep(0.05)
-                    GPIO.output(p, 0)
+                            #####################################################
+                            #   inserire controllo validita casella             #
+                            #####################################################
+                            playerEndTurn = True
+                        else:
+                            #####################################################
+                            #   controllo uso oggetto? riposo?                  #
+                            #####################################################
+                            playerEndTurn = False
+                        time.sleep(0.05)
+                        GPIO.output(p, 0)
         if playerEndTurn:
             playerEndTurn = False
             player.setX(posPlayerX)
