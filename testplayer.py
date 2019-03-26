@@ -9,6 +9,7 @@ import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 import enemy
 import player
+import Map
 
 # inport GPIO library
 import numpy as np
@@ -67,6 +68,7 @@ player = player.Player()
 nemico = enemy.Enemy()
 initPosX = 7
 initPosY = 14
+mappa=Map.Map()
 try:
     # accende led
     ser.write(str(
@@ -107,9 +109,10 @@ try:
                 print("ciao giocatore")
                 player = player(posPlayerX, posPlayerY)
                 nemico = Enemy(posPlayerX, posPlayerY)
+                # inserire illuminazione stanza
                 ser.write(str(initPosY * 15 + initPosX) + ",5")  # spegne led
             GPIO.output(p, 0)
-        time.sleep(0.1)
+        time.sleep(0.05)
     #####################################################
     #   inserire controllo battito cardiaco             #
     #####################################################
