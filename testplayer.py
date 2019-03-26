@@ -17,6 +17,15 @@ import RPi.GPIO as GPIO  # import RPi.GPIO module
 from time import sleep
 import serial  # importa libreria serial lettura valori usb
 
+def illuminaStanza():
+    nodes = mappa.getAllNodes()
+    for n in range(len(nodes)):
+        for m in range(len(nodes[0])):
+            if player.roomID == nodes[nemico.tileX][nemico.tileY].roomID:
+                if nodes[m][n].roomID == player.roomID:
+                    ser.write(str(initPosY + initPosX * 15) + ",0")
+                elif nodes[m][n].roomID == player.roomID:
+                    ser.write(str(initPosY + initPosX * 15) + ",3")
 # Software SPI configuration:
 # CLK  = 23
 # MISO = 21
@@ -68,10 +77,11 @@ player = player.Player()
 nemico = enemy.Enemy()
 initPosX = 7
 initPosY = 14
-mappa=Map.Map()
+mappa = Map.Map()
 try:
     # accende led
-    ser.write(str(initPosY + initPosX * 15) + ",3")  # inizializzazione del giocatore: deve venir posizionato sulla casella 217, e nemico
+    ser.write(str(
+        initPosY + initPosX * 15) + ",3")  # inizializzazione del giocatore: deve venir posizionato sulla casella 217, e nemico
     # manca battito rilevato
     while not playerOnBoard:
         for n, p in enumerate(gpioPin):
@@ -90,7 +100,7 @@ try:
             for i in range(len(values)):
                 if values[i] > 1000:
                     # print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
-                    num = i + n *15
+                    num = i + n * 15
                     # print(str(i * 15 + n + 1))
                     posPlayerY = i
                     posPlayerX = n
@@ -107,7 +117,7 @@ try:
                 playerOnBoard = True
                 print("ciao giocatore")
                 # inserire illuminazione stanza
-                ser.write(str(initPosY * 15 + initPosX) + ",5")  # spegne led
+                illuminaStanza()
             GPIO.output(p, 0)
         time.sleep(0.05)
     #####################################################
@@ -184,10 +194,12 @@ try:
             nemico.setMove()
             nemico.updatePlayerPos(player.getX(), player.getY())
             nemico.update()
-            ser.write(str(nemico.getPos()+",1"))
+            ser.write(str(nemico.getPos() + ",1"))
         if count == 100:
             ser.flushInput()
             count = 0
 except KeyboardInterrupt:  # trap a CTRL+C keyboard interrupt
     GPIO.cleanup()
+
+
 
