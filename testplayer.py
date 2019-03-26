@@ -121,7 +121,7 @@ try:
                 # inserire illuminazione stanza
                 illuminaStanza()
             GPIO.output(p, 0)
-        time.sleep(0.05)
+        time.sleep(1)
     #####################################################
     #   inserire controllo battito cardiaco             #
     #####################################################
@@ -134,12 +134,12 @@ try:
                 if nodes[player.x][player.y].portal:
                     playerEndTurn = True
                     nemico.destroyPortal(player.getX(), player.getY())
-                elif n[player.getX()][player.getY()].getManifestazione():
+                elif nodes[player.x][player.y].manifestazione:
                     playerEndTurn = True
                     ######################################################################################
                     # inserire prova sensori per risoluzione manifestazione e gestione evento             #
                     ######################################################################################
-                    nemico.risolviManifestazione(player.getX(), player.getY())
+                    nemico.risolviManifestazione(player.x, player.y)
                 else:
                     oldPosx = player.getX()
                     oldPosy = player.getY()
