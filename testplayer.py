@@ -31,7 +31,7 @@ def illuminaStanza():
             elif nodes[m][n].roomID == player.roomID:
                 print("scrivo stanza")
                 string=string+(str(initPosY + initPosX * 15) + ",3;")
-    ser.write(str)
+    ser.write(string)
 # Software SPI configuration:
 # CLK  = 23
 # MISO = 21
