@@ -82,14 +82,14 @@ try:
                     num = i + n * 15
                     print(str(i * 15 + n + 1))
                     # Pause for half a second.
-                    ser.write(str(num+ ",3"))
+                    ser.write(str(num)+ ",3"))
             for i in range(len(values2)):
                 if values2[i] > 1000:
                     print('{}{}{}{}'.format('sei in posizione ', (i + 8), ' , ', n))
                     num = (i + 8) + n * 15
                     print(str((i + 8) * 15 + n + 1))
                     # Pause for half a second.
-                    ser.write(str(num+ ",3"))
+                    ser.write(str(num)+ ",3"))
             # print('{}{}'.format('num=',num))
             # ser.write(str(num))
             time.sleep(0.1)
