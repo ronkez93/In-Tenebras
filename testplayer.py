@@ -114,6 +114,7 @@ try:
     #   inserire controllo battito cardiaco             #
     #####################################################
     while True:  # gestione del turno giocatore
+        print("gestione turno giocatore")
         count += 1
         nodes = nemico.getNodes()
         for n in nodes:
