@@ -126,7 +126,7 @@ try:
                 # inserire illuminazione stanza
                 illuminaStanza()
             GPIO.output(p, 0)
-        time.sleep(1)
+        time.sleep(10)
     #####################################################
     #   inserire controllo battito cardiaco             #
     #####################################################
