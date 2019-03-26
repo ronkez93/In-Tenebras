@@ -71,8 +71,7 @@ initPosY = 14
 mappa=Map.Map()
 try:
     # accende led
-    ser.write(str(
-        initPosY + initPosX * 15) + ",3")  # inizializzazione del giocatore: deve venir posizionato sulla casella 217, e nemico
+    ser.write(str(initPosY + initPosX * 15) + ",3")  # inizializzazione del giocatore: deve venir posizionato sulla casella 217, e nemico
     # manca battito rilevato
     while not playerOnBoard:
         for n, p in enumerate(gpioPin):
@@ -109,7 +108,6 @@ try:
                 print("ciao giocatore")
                 player.x = posPlayerX
                 player.y = posPlayerY
-                nemico = Enemy(posPlayerX, posPlayerY)
                 # inserire illuminazione stanza
                 ser.write(str(initPosY * 15 + initPosX) + ",5")  # spegne led
             GPIO.output(p, 0)
