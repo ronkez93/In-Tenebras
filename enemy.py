@@ -18,8 +18,8 @@ class Enemy:
         self.playerTarget = player.Player()
         self.playerTarget.x=7
         self.playerTarget.y=14
-        self.tileX = np.random.random_integers(self.MapSize)
-        self.tileY = np.random.random_integers(self.MapSize)
+        self.tileX = np.random.random_integers(self.MapSize-1)
+        self.tileY = np.random.random_integers(self.MapSize-1)
 
         print(self.tileX)
         print(self.tileY)
@@ -27,19 +27,19 @@ class Enemy:
             print(self.playerTarget.distanceTo(self.tileX, self.tileY))
             print(self.tileX)
             print(self.tileY)
-            self.tileX = np.random.random_integers(self.MapSize)
-            self.tileY = np.random.random_integers(self.MapSize)
+            self.tileX = np.random.random_integers(self.MapSize-1)
+            self.tileY = np.random.random_integers(self.MapSize-1)
         self.move1 = False
         self.GeneratePathfindingGraph()
         self.currentpath = []
         self.maxMovement = 2
         self.remainingMovement = self.maxMovement
         self.turnToSpawn = self.portalSpawn
-        spawnX = np.random.random_integers(self.MapSize)
-        spawnY = np.random.random_integers(self.MapSize)
+        spawnX = np.random.random_integers(self.MapSize-1)
+        spawnY = np.random.random_integers(self.MapSize-1)
         while self.nodes[spawnX][spawnY].roomID == 12:
-            spawnX = np.random.random_integers(self.MapSize)
-            spawnY = np.random.random_integers(self.MapSize)
+            spawnX = np.random.random_integers(self.MapSize-1)
+            spawnY = np.random.random_integers(self.MapSize-1)
         self.nodes[spawnX][spawnY].setPortal(True)
         self.spawnManifestazione()
         self.spawnManifestazione()
@@ -149,8 +149,8 @@ class Enemy:
                         self.turnToSpawn = self.portalSpawn
                         spawned = False
                         while not spawned:  # finche non viene spawnato genero coordinate e verifico che non siano in una stanza con gia un portale
-                            spawnX = np.random.random_integers(self.MapSize)
-                            spawnY = np.random.random_integers(self.MapSize)
+                            spawnX = np.random.random_integers(self.MapSize-1)
+                            spawnY = np.random.random_integers(self.MapSize-1)
                             if not self.nodes[spawnX][
                                 spawnY].getPortal():  # se le coordinate non hanno gia un portale, controllo se non ce n'e un altro nella stanza
                                 stanza = self.nodes[spawnX][spawnY].getRoom()
@@ -174,8 +174,8 @@ class Enemy:
                     self.remainingMovement = 0
                     distance = False
                     while not distance:
-                        newX = np.random.random_integers(self.MapSize)
-                        newY = np.random.random_integers(self.MapSize)
+                        newX = np.random.random_integers(self.MapSize-1)
+                        newY = np.random.random_integers(self.MapSize-1)
                         if np.abs(self.tileX - newX) >= 6 or np.abs(self.tileY - newY):
                             distance = True
                             self.tileX = newX
@@ -197,8 +197,8 @@ class Enemy:
         spawnY = -1
         while not spawn:
             spawn = True
-            spawnX = np.random.random_integers(self.MapSize)
-            spawnY = np.random.random_integers(self.MapSize)
+            spawnX = np.random.random_integers(self.MapSize-1)
+            spawnY = np.random.random_integers(self.MapSize-1)
             print("dimensioni")
             print(len(self.nodes))
             print(len(self.nodes[0]))
@@ -206,7 +206,7 @@ class Enemy:
                 for m in range(len(self.nodes[0])):
                     if self.nodes[m][n].roomID == self.nodes[spawnX][spawnY].roomID or self.nodes[spawnX][spawnY].roomID == self.nodes[self.playerTarget.x][self.playerTarget.y].roomID:
                         spawn = False
-        self.nodes[spawnX][spawnY].setManifestazione(True)
+        self.nodes[spawnX][spawnY].manifestazione=True
 
     def getNodes(self):
         return self.nodes
