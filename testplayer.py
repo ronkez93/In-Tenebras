@@ -125,7 +125,7 @@ try:
                 print("ciao giocatore")
                 player.x=posPlayerX
                 player.y=posPlayerY
-
+                player.aggiornaRoom()
                 # inserire illuminazione stanza
                 illuminaStanza()
             GPIO.output(p, 0)

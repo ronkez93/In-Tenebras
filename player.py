@@ -24,7 +24,8 @@ class Player:
              #       if row[i]!=-1:
               #          self.pathfindingGraph[row[0],15][np.floor_divide(row[0],15)].addNeighbour(self.pathfindingGraph[row[i]%15][np.floor_divide(row[i],15)])
 
-
+    def aggiornaRoom(self):
+        self.roomID=self.map.allNode[self.x][self.y].roomID
 
     def position(self, x, y):
         self.x = x
