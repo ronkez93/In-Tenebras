@@ -26,7 +26,7 @@ class Player:
 
     def aggiornaRoom(self):
         print("roomid:")
-        self.roomID=self.map.allNode[self.x][self.y].roomID
+        self.roomID=self.map.allNode[self.y][self.x].roomID
         print(self.roomID)
 
     def position(self, x, y):
