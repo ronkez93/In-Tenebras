@@ -107,7 +107,7 @@ class Enemy:
                 if alt < dist[n.y][n.x]:
                     dist[n.y][n.x] = alt
                     prev[n.y][n.x] = u
-        print(prev)
+        #print(prev)
         if prev[target.y][target.x] is None:
             return
         cpath = []

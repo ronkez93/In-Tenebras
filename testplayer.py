@@ -41,7 +41,7 @@ def illuminaStanza():
     ser.write(string)
 
 def clearboard():
-    string="0,4;"
+    string="0,5;"
     ser.write(string)
 
 # Software SPI configuration:
@@ -99,7 +99,7 @@ mappa = Map.Map()
 try:
     # accende led
     ser.write(str(
-        initPosY + initPosX * 15) + ",3;")  # inizializzazione del giocatore: deve venir posizionato sulla casella 217, e nemico
+        initPosY + initPosX * 15) + ",0;")  # inizializzazione del giocatore: deve venir posizionato sulla casella 217, e nemico
     # manca battito rilevato
     while not playerOnBoard:
         for n, p in enumerate(gpioPin):
@@ -223,7 +223,7 @@ try:
             nemico.updatePlayerPos(player.x, player.y)
             nemico.update()
             print("3")
-            ser.write(str(nemico.getPos())+",1;")
+            ser.write(str(nemico.getPos())+",3;")
             illuminaStanza()
             print("inizio nuovo turno")
         if count == 100:
