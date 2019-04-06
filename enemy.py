@@ -37,10 +37,13 @@ class Enemy:
         self.turnToSpawn = self.portalSpawn
         spawnX = np.random.random_integers(self.MapSize-1)
         spawnY = np.random.random_integers(self.MapSize-1)
-        while self.nodes[spawnX][spawnY].roomID == 12:
+        while self.nodes[spawnY][spawnX].roomID == 12:
             spawnX = np.random.random_integers(self.MapSize-1)
             spawnY = np.random.random_integers(self.MapSize-1)
-        self.nodes[spawnX][spawnY].setPortal(True)
+        print("portale in")
+        print(spawnX)
+        print(spawnY)
+        self.nodes[spawnY][spawnX].setPortal(True)
         self.spawnManifestazione()
         self.spawnManifestazione()
         self.maxEvent = True
@@ -88,12 +91,12 @@ class Enemy:
         dist = [[0 for j in range(15)] for i in range(15)]
         prev = [[node.Node() for j in range(15)] for i in range(15)]
         unvisited = []
-        for n in range(len(self.nodes)):
-            for m in range(len(self.nodes[0])):
-                if self.nodes[n][m] != source:
-                    dist[n][m] = float('inf')
-                    prev[n][m] = None
-                unvisited.append(self.nodes[n][m])
+        for n in range(len(self.nodes)): #righe
+            for m in range(len(self.nodes[0])): #colonne
+                if self.nodes[m][n] != source:
+                    dist[m][n] = float('inf')
+                    prev[m][n] = None
+                unvisited.append(self.nodes[m][n])
         while len(unvisited) > 0:
             u = None
             for n in unvisited:
