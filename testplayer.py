@@ -35,6 +35,11 @@ def illuminaStanza():
                 string=string+(str(m + n * 15) + ",3;")
     print(string)
     ser.write(string)
+
+def clearboard():
+    string="0,4;"
+    ser.write(string)
+
 # Software SPI configuration:
 # CLK  = 23
 # MISO = 21
@@ -203,7 +208,9 @@ try:
                 time.sleep(0.05)
                 GPIO.output(p, 0)
         if playerEndTurn:
+            clearboard()
             print("fine turno")
+            time.sleep(2)
             playerEndTurn = False
             player.x=posPlayerX
             player.y=posPlayerY
