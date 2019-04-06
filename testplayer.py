@@ -212,6 +212,7 @@ try:
             nemico.update()
             ser.write(str(nemico.getPos() + ",1"))
             illuminaStanza()
+            print("inizio nuovo turno")
         if count == 100:
             ser.flushInput()
             count = 0
