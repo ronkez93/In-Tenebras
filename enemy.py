@@ -102,7 +102,7 @@ class Enemy:
                 alt = dist[u.y][u.x] + self.map.costToEnter(u.x, u.y, n.x, n.y)
                 if alt < dist[n.y][n.x]:
                     dist[n.y][n.x] = alt
-                    prev[self.nodes[n.y][n.x]] = u
+                    prev[n.y][n.x] = u
         print(prev)
         if prev[target] is None:
             return
