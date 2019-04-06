@@ -27,7 +27,7 @@ def illuminaStanza():
             if player.roomID == nodes[nemico.tileY][nemico.tileX].roomID:
                 if nodes[m][n].roomID == player.roomID:
                     print("scrivo demone")
-                    string=string+(str(n + m * 15) + ",4;")
+                    string=string+(str(m + n * 15) + ",4;")
             elif nodes[m][n].roomID == player.roomID:
                 print ("player room:")
                 print (player.roomID)
