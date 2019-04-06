@@ -138,7 +138,7 @@ class Enemy:
     def update(self):
         while self.move1:  # finche tocca al nemico creo il percorso fino al giocatore
             self.generatepathto(self.playerTarget.x, self.playerTarget.y)
-            if self.currentpath is not None:  # se non sono sul giocatore il nemico si muove finche puo
+            if len(self.currentpath) >1:  # se non sono sul giocatore il nemico si muove finche puo
                 self.remainingMovement -= self.map.costToEnter(self.tileX, self.tileY, self.currentpath[1].x,
                                                                self.currentpath[1].y)
                 self.tileX = self.currentpath[1].x
