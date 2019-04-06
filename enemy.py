@@ -99,9 +99,9 @@ class Enemy:
                 break
             unvisited.remove(u)
             for n in u.neighbours:
-                alt = dist[u] + self.map.costToEnter(u.x, u.y, n.x, n.y)
-                if alt < dist[n]:
-                    dist[n] = alt
+                alt = dist[u.y][u.x] + self.map.costToEnter(u.x, u.y, n.x, n.y)
+                if alt < dist[n.y][n.x]:
+                    dist[n.y][n.x] = alt
                     prev[n] = u
         if prev[target] is None:
             return
@@ -115,7 +115,7 @@ class Enemy:
 
     # chiede se la cella alle coordinate passate e anche la cella di un portale
     def onPortal(self, x, y):
-        return self.nodes[x][y].portal
+        return self.nodes[y][x].portal
 
     # funzione per distruggere un portale nella casella di coordinate passate
     def destroyPortal(self, x, y):
