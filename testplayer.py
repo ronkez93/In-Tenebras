@@ -188,7 +188,7 @@ try:
                         # Pause for half a second.
                 if playerOnBoard and (posPlayerX != oldPosx or posPlayerY != oldPosy):
                     if abs(posPlayerX-oldPosx)>4 or abs(posPlayerY-oldPosy)>4:
-                        #print("casella non valida")
+                        print("casella non valida")
                     else:
                         playerEndTurn = True
                 else:
