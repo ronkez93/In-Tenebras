@@ -18,7 +18,7 @@ from time import sleep
 import serial  # importa libreria serial lettura valori usb
 
 def illuminaStanza():
-    nodes = nemico.nodes.copy()
+    nodes = nemico.nodes
     ser.write(str(nemico.getPos())+",3;")
     sleep(0.1)
     string=""
