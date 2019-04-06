@@ -85,7 +85,7 @@ class Enemy:
     def generatepathto(self, x, y):
         print("target")
         print(self.playerTarget.x)
-        print(self.playerTarget.x)
+        print(self.playerTarget.y)
         source = self.nodes[self.tileY][self.tileX]
         target = self.nodes[y][x]
         dist = [[0 for j in range(15)] for i in range(15)]
