@@ -81,7 +81,7 @@ class Enemy:
     def generatepathto(self, x, y):
         source = self.nodes[self.tileY][self.tileX]
         target = self.nodes[y][x]
-        dist =  [[0 for j in range(15)] for i in range(15)]
+        dist = [[0 for j in range(15)] for i in range(15)]
         prev = {source: None}
         unvisited = []
         for n in range(len(self.nodes)):
@@ -103,6 +103,7 @@ class Enemy:
                 if alt < dist[n.y][n.x]:
                     dist[n.y][n.x] = alt
                     prev[n] = u
+        print(prev)
         if prev[target] is None:
             return
         cpath = []
