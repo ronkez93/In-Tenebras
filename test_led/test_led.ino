@@ -19,7 +19,7 @@
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800); 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
-int delayval = 100; // delay for half a second 
+int delayval = 50; // delay for half a second 
 int n=0;
 int oldPixelnum=-1;
 String inputString="";
@@ -46,21 +46,47 @@ void setup() {
 
 void loop() {
   n=0;
-  if(Serial.available()>0){
-	  inputString=Serial.readStringUntil(',');
-    color=Serial.readStringUntil('\n');
-    if (inputString != ""){
-        n = inputString.toInt();
+  char inputstring[200];
+  String readed="";
+  int buffindex=0;
+  bool received=false;
+  while(Serial.available()>0){
+	  char letto=Serial.read();
+   readed+=letto;
+    if (letto!='\n'){
+      inputstring[buffindex]=letto;
+      buffindex++;
     }
-    if (color != ""){
-      pixelcolor=color.toInt();
+    received=true;
+  }
+  Serial.print(readed);
+  bool lettonum=false;
+  String num="";
+  String pixcolor="";
+  if (received){
+    Serial.println("im in");
+    for (int i=0;i<buffindex;i++){ 
+      if (inputstring[i] != ',' && !lettonum){
+          num+=inputstring[i];
+      }
+      if (inputstring[i]==','){
+        n=num.toInt();
+        lettonum=true;
+      }
+      if (inputstring[i] != ';' && lettonum){
+        pixcolor+=inputstring[i];
+      }
+      if (inputstring[i] == ';'){
+        pixelcolor=pixcolor.toInt();
+        Serial.print("ho letto: ");
+        Serial.println(n);
+        Serial.print("colore: ");
+        Serial.println(pixelcolor);
+        pixel(n,pixelcolor);
+        lettonum=false;
+      }
     }
-	  Serial.print("ho letto: ");
-	  Serial.println(n);
-    Serial.print("colore: ");
-    Serial.println(pixelcolor);
-	  pixel(n,pixelcolor);
-	  sendPositionToNextion();
+    sendPositionToNextion();
     rfid();
   }
   delay(delayval); // Delay for a period of time (in milliseconds).
@@ -71,8 +97,7 @@ void pixel(int num, int pc){    //funzione gestore dei pixel
   
   // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
   // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-  if(num != oldPixelnum)
-  {
+
     switch (pc){
       case 0:
           pixels.setPixelColor(num, pixels.Color(90,0,0));
@@ -85,11 +110,14 @@ void pixel(int num, int pc){    //funzione gestore dei pixel
           break;
        case 3:
           pixels.setPixelColor(num, pixels.Color(180,160,120));
-      }
-    pixels.setPixelColor(oldPixelnum, pixels.Color(0,0,0));
-    
-    oldPixelnum=num;
-  }
+          break;
+       case 4:
+          for (int i=0;i<NUMPIXELS;i++){
+            pixels.setPixelColor(i, pixels.Color(0,0,0));
+          }
+          }
+      
+
   // Moderately bright green color.
   pixels.show(); // This sends the updated pixel color to the hardware.
 }

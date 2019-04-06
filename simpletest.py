@@ -75,21 +75,21 @@ try:
                 values2[i] = mcp2.read_adc(i)
             # Print the ADC values.
             # results = np.append(values, values2, axis=0)
-            # print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
+            print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | '.format(*values2))
             for i in range(len(values)):
                 if values[i] > 1000:
                     print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
                     num = i + n * 15
                     print(str(i * 15 + n + 1))
                     # Pause for half a second.
-                    ser.write(str(num)+ ",3"))
+                    ser.write(str(num)+ ",3")
             for i in range(len(values2)):
                 if values2[i] > 1000:
                     print('{}{}{}{}'.format('sei in posizione ', (i + 8), ' , ', n))
                     num = (i + 8) + n * 15
                     print(str((i + 8) * 15 + n + 1))
                     # Pause for half a second.
-                    ser.write(str(num)+ ",3"))
+                    ser.write(str(num)+ ",3")
             # print('{}{}'.format('num=',num))
             # ser.write(str(num))
             time.sleep(0.1)
