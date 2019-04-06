@@ -187,7 +187,7 @@ try:
                         posPlayerX = n
                         # Pause for half a second.
                 if playerOnBoard and (posPlayerX != oldPosx or posPlayerY != oldPosy):
-                    if abs(posPlayerX-player.x)>4 or abs(posPlayerY-player.y)>4:
+                    if abs(posPlayerX-oldPosx)>4 or abs(posPlayerY-oldPosy)>4:
                         print("casella non valida")
                     else:
                         playerEndTurn = True
@@ -206,6 +206,7 @@ try:
             nemico.updatePlayerPos(player.x, player.y)
             nemico.update()
             ser.write(str(nemico.getPos() + ",1"))
+            illuminaStanza()
         if count == 100:
             ser.flushInput()
             count = 0
