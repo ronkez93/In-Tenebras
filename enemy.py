@@ -81,19 +81,18 @@ class Enemy:
     def generatepathto(self, x, y):
         source = self.nodes[self.tileY][self.tileX]
         target = self.nodes[y][x]
-        dist = [[0 for j in range(15)] for i in range(15)]
-        prev = {source: None}
+        dist = {node: float('inf') for node in self.nodes}
+        prev = {node: None for node in self.nodes}
+        dist[source]=0
+        vertices=self.nodes.copy()
         unvisited = []
         for n in range(len(self.nodes)):
             for m in range(len(self.nodes[0])):
-                if node != source:
-                    dist[n][m] = float('inf')
-                    prev[self.nodes[n][m]] = None
                 unvisited.append(self.nodes[n][m])
         while len(unvisited) > 0:
             u = None
             for n in unvisited:
-                if u is None or dist[n.y][n.x] < dist[u.y][u.x]:
+                if u is None or dist[n] < dist[u]:
                     u = n
             if u == target:
                 break
