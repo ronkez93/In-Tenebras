@@ -188,7 +188,7 @@ try:
                         # Pause for half a second.
                 if playerOnBoard and (posPlayerX != oldPosx or posPlayerY != oldPosy):
                     if abs(posPlayerX-oldPosx)>4 or abs(posPlayerY-oldPosy)>4:
-                        print("casella non valida")
+                        #print("casella non valida")
                     else:
                         playerEndTurn = True
                 else:
@@ -199,6 +199,7 @@ try:
                 time.sleep(0.05)
                 GPIO.output(p, 0)
         if playerEndTurn:
+            print("fine turno")
             playerEndTurn = False
             player.x=posPlayerX
             player.y=posPlayerY
