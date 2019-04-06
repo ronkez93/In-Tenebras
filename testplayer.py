@@ -208,9 +208,7 @@ try:
             player.x=posPlayerX
             player.y=posPlayerY
             nemico.move1=True
-            print("1")
             nemico.updatePlayerPos(player.x, player.y)
-            print("2")
             nemico.update()
             print("3")
             ser.write(str(nemico.getPos() + ",1"))
