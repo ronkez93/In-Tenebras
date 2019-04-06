@@ -48,7 +48,8 @@ class Enemy:
 
     # aggiorna la posizione del giocatore sulla base delle coordinate date DA GESTIRE MANIFESTAZIONI E CHIUSURA PORTALI
     def updatePlayerPos(self, playerx, playery):
-        self.playerTarget.position(playerx, playery)
+        self.playerTarget.y=playery
+        self.playerTarget.x=playerx
         self.move1 = True
 
     # crea una struttura basandosi sui nodi vicini
@@ -79,6 +80,9 @@ class Enemy:
 
     # crea un lista di nodi currentpath contenente tutte le celle per arrivare alla posizione passata
     def generatepathto(self, x, y):
+        print("target")
+        print(self.playerTarget.x)
+        print(self.playerTarget.x)
         source = self.nodes[self.tileY][self.tileX]
         target = self.nodes[y][x]
         dist = [[0 for j in range(15)] for i in range(15)]
