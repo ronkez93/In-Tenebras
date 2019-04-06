@@ -218,7 +218,7 @@ try:
             nemico.updatePlayerPos(player.x, player.y)
             nemico.update()
             print("3")
-            ser.write(str(nemico.getPos() + ",1"))
+            ser.write(str(nemico.getPos())+",1;")
             illuminaStanza()
             print("inizio nuovo turno")
         if count == 100:
