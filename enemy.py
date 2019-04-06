@@ -79,17 +79,17 @@ class Enemy:
 
     # crea un lista di nodi currentpath contenente tutte le celle per arrivare alla posizione passata
     def generatepathto(self, x, y):
-        source = self.nodes[self.tileX][self.tileY]
-        target = self.nodes[x][y]
-        nodes = set((self.nodes))
-        dist = {source: 0}
+        source = self.nodes[self.tileY][self.tileX]
+        target = self.nodes[y][x]
+        dist =  [[0 for j in range(15)] for i in range(15)]
         prev = {source: None}
         unvisited = []
-        for node in nodes:
-            if node != source:
-                dist[node] = math.inf
-                prev[node] = None
-            unvisited.append(node)
+        for n in range(len(self.nodes)):
+            for m in range(len(self.nodes[0])):
+                if node != source:
+                    dist[n][m] = math.inf
+                    prev[self.nodes[n][m]] = None
+                unvisited.append(self.nodes[n][m])
         while len(unvisited) > 0:
             u = None
             for n in unvisited:
