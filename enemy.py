@@ -81,7 +81,7 @@ class Enemy:
     def generatepathto(self, x, y):
         source = self.nodes[self.tileX][self.tileY]
         target = self.nodes[x][y]
-        nodes = set(self.nodes)
+        nodes = set((self.nodes))
         dist = {source: 0}
         prev = {source: None}
         unvisited = []

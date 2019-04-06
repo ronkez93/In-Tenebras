@@ -24,7 +24,7 @@ def illuminaStanza():
     string=""
     for n in range(len(nodes)):
         for m in range(len(nodes[0])):
-            if player.roomID == nodes[nemico.tileX][nemico.tileY].roomID:
+            if player.roomID == nodes[nemico.tileY][nemico.tileX].roomID:
                 if nodes[m][n].roomID == player.roomID:
                     print("scrivo demone")
                     string=string+(str(n + m * 15) + ",0;")
