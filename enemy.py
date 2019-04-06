@@ -87,7 +87,7 @@ class Enemy:
         for n in range(len(self.nodes)):
             for m in range(len(self.nodes[0])):
                 if node != source:
-                    dist[n][m] = math.inf
+                    dist[n][m] = float('inf')
                     prev[self.nodes[n][m]] = None
                 unvisited.append(self.nodes[n][m])
         while len(unvisited) > 0:
