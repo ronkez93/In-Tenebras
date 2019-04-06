@@ -32,7 +32,7 @@ class Enemy:
         self.move1 = False
         self.GeneratePathfindingGraph()
         self.currentpath = []
-        self.maxMovement = 2
+        self.maxMovement = 3
         self.remainingMovement = self.maxMovement
         self.turnToSpawn = self.portalSpawn
         spawnX = np.random.random_integers(self.MapSize-1)
