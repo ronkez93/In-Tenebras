@@ -93,7 +93,7 @@ class Enemy:
         while len(unvisited) > 0:
             u = None
             for n in unvisited:
-                if u is None or dist[n] < dist[u]:
+                if u is None or dist[n.y][n.x] < dist[u.y][u.x]:
                     u = n
             if u == target:
                 break
