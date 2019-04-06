@@ -214,6 +214,7 @@ try:
             playerEndTurn = False
             player.x=posPlayerX
             player.y=posPlayerY
+            player.aggiornaRoom()
             nemico.move1=True
             nemico.updatePlayerPos(player.x, player.y)
             nemico.update()
