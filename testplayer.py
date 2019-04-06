@@ -183,7 +183,7 @@ try:
                         #print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n + 8))
                         num = (i + 8) + n * 15
                         print(str((i + 8) + n * 15))
-                        posPlayerY = i
+                        posPlayerY = i + 8
                         posPlayerX = n
                         # Pause for half a second.
                 if playerOnBoard and (posPlayerX != oldPosx or posPlayerY != oldPosy):
