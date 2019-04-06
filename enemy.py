@@ -104,13 +104,13 @@ class Enemy:
                     dist[n.y][n.x] = alt
                     prev[n.y][n.x] = u
         print(prev)
-        if prev[target] is None:
+        if prev[target.y][target.x] is None:
             return
         cpath = []
         curr = target
         while curr is not None:
             cpath.append(curr)
-            curr = prev[curr]
+            curr = prev[curr.y][curr.x]
         cpath.reverse()
         self.currentpath = cpath
 
