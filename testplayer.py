@@ -29,6 +29,8 @@ def illuminaStanza():
                     print("scrivo demone")
                     string=string+(str(n + m * 15) + ",0;")
             elif nodes[m][n].roomID == player.roomID:
+                print ("player room:")
+                print (player.roomID)
                 print("scrivo stanza")
                 string=string+(str(m + n * 15) + ",3;")
     print(string)
