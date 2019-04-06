@@ -172,7 +172,7 @@ try:
                 for i in range(len(values)):
                     if values[i] > 1000:
                         playerOnBoard = True
-                        print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
+                        #print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
                         num = i + n * 15
                         print(str(i + n * 15))
                         posPlayerY = i
@@ -180,18 +180,17 @@ try:
                 for i in range(len(values2)):
                     if values2[i] > 1000:
                         playerOnBoard = True
-                        print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n + 8))
+                        #print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n + 8))
                         num = (i + 8) + n * 15
                         print(str((i + 8) + n * 15))
                         posPlayerY = i
                         posPlayerX = n
                         # Pause for half a second.
                 if playerOnBoard and (posPlayerX != oldPosx or posPlayerY != oldPosy):
-
-                    #####################################################
-                    #   inserire controllo validita casella             #
-                    #####################################################
-                    playerEndTurn = True
+                    if abs(posPlayerX-player.x)>4 or abs(posPlayerY-player.y)>4:
+                        print("casella non valida")
+                    else:
+                        playerEndTurn = True
                 else:
                     #####################################################
                     #   controllo uso oggetto? riposo?                  #
