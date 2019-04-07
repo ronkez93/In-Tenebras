@@ -109,12 +109,15 @@ class Enemy:
                 alt = dist[u.y][u.x] + self.map.costToEnter(u.x, u.y, n.x, n.y)
                 if alt < dist[n.y][n.x]:
                     dist[n.y][n.x] = alt
-                    prev[n.y][n.x] = self.nodes[u.y][u.x]
+                    prev[n.y][n.x] = u
         #print(prev)
         if prev[target.x][target.y] is None:
             return
         cpath = []
         curr = target
+        print("in generatepath target:")
+        print(target.x)
+        print(target.y)
         while curr is not None:
             cpath.append(curr)
             curr = prev[curr.y][curr.x]
