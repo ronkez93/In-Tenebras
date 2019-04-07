@@ -102,7 +102,7 @@ class Enemy:
             for n in unvisited:
                 if u is None or dist[n.y][n.x] < dist[u.y][u.x]:
                     u = n
-            if u == target:
+            if u.x == target.x and u.y == target.y:
                 break
             unvisited.remove(u)
             for n in u.neighbours:
