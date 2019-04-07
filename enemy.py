@@ -110,9 +110,10 @@ class Enemy:
                 if alt < dist[n.y][n.x]:
                     dist[n.y][n.x] = alt
                     prev[n.y][n.x] = u
-        print(prev)
+        #print(prev)
         if prev[target.x][target.y] is None:
             return
+        print("creo currentpath")
         cpath = []
         curr = target
         while curr is not None:
@@ -147,7 +148,7 @@ class Enemy:
         self.generatepathto(self.playerTarget.x, self.playerTarget.y)
         while self.move1:  # finche tocca al nemico creo il percorso fino al giocatore
             if not self.currentpath:
-                print("no loop infinito")
+                #print("no loop infinito")
                 if len(self.currentpath) >0:  # se non sono sul giocatore il nemico si muove finche puo
                     print("stampo percorso")
                     for i in range(len(self.currentpath)):
@@ -205,7 +206,7 @@ class Enemy:
                                 self.tileX = newX
                                 self.tileY = newY
                                 self.playerTarget.decrementaFede()
-            print("loop infinito")
+            # print("loop infinito")
 
     def getX(self):
         return self.tileX
