@@ -244,6 +244,7 @@ try:
             illuminaStanza()
             print("inizio nuovo turno")
         else:
+            print("doppioturno")
             playerEndTurn = False
             player.x=posPlayerX
             player.y=posPlayerY
