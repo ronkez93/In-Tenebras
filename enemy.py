@@ -96,7 +96,7 @@ class Enemy:
                 if self.nodes[n][m] != source:
                     dist[n][m] = float('inf')
                     prev[n][m] = None
-                unvisited.append(self.nodes[m][n])
+                unvisited.append(self.nodes[n][m])
         while len(unvisited) > 0:
             u = None
             for n in unvisited:
@@ -118,15 +118,8 @@ class Enemy:
         while curr is not None:
             cpath.append(curr)
             curr = prev[curr.y][curr.x]
-        for n in cpath:
-            print("percorso:")
-            print(n.x)
-            print(n.y)
+        print()
         cpath.reverse()
-        for n in cpath:
-            print("percorso:")
-            print(n.x)
-            print(n.y)
         self.currentpath = cpath
 
     # chiede se la cella alle coordinate passate e anche la cella di un portale
