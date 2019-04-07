@@ -93,9 +93,9 @@ class Enemy:
         unvisited = []
         for n in range(len(self.nodes)): #righe
             for m in range(len(self.nodes[0])): #colonne
-                if self.nodes[n][m] != source:
-                    dist[n][m] = float('inf')
-                    prev[n][m] = None
+                if self.nodes[m][n] != source:
+                    dist[m][n] = float('inf')
+                    prev[m][n] = None
                 unvisited.append(self.nodes[m][n])
         while len(unvisited) > 0:
             u = None

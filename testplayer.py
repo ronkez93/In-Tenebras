@@ -148,7 +148,7 @@ try:
                 illuminaStanza()
             GPIO.output(p, 0)
         time.sleep(0.1)
-    time.sleep(10)
+    time.sleep(5)
     #####################################################
     #   inserire controllo battito cardiaco             #
     #####################################################
