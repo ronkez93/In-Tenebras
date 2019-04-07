@@ -114,14 +114,14 @@ class Enemy:
         if prev[target.y][target.x] is None:
             return
         cpath = []
-        curr = target
-        print("in generatepath target:")
-        print(target.x)
-        print(target.y)
+        curr = self.nodes[target.y][target.x]
         while curr is not None:
             cpath.append(curr)
             curr = prev[curr.y][curr.x]
-        print()
+        for n in cpath:
+            print("percorso:")
+            print(n.x)
+            print(n.y)
         cpath.reverse()
         self.currentpath = cpath
 
