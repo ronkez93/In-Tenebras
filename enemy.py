@@ -119,10 +119,10 @@ class Enemy:
             cpath.append(curr)
             curr = prev[curr.y][curr.x]
         cpath.reverse()
-        for n in cpath:
-            print("percorso:")
-            print(n.x)
-            print(n.y)
+        #for n in cpath:
+        #    print("percorso:")
+        #    print(n.x)
+        #    print(n.y)
         self.currentpath = cpath
 
     # chiede se la cella alle coordinate passate e anche la cella di un portale
