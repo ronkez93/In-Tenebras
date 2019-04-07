@@ -81,6 +81,7 @@ void loop() {
         Serial.print("colore: ");
         Serial.println(pixelcolor);*/
         pixel(n,pixelcolor);
+        delay(20);
         num="";
         pixcolor="";
         lettonum=false;
