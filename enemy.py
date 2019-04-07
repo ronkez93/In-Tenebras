@@ -127,12 +127,12 @@ class Enemy:
 
     # funzione per distruggere un portale nella casella di coordinate passate
     def destroyPortal(self, x, y):
-        self.nodes[x][y].setPortal(False)
+        self.nodes[y][x].setPortal(False)
         for n in range(len(self.nodes)):
             for m in range(len(self.nodes[0])):
-                if self.nodes[n][m].portal and n != x and m !=y:
-                    self.nodes[n][m].neighbours.remove(self.nodes[x][y])
-                    self.nodes[x][y].neighbours.remove(self.nodes[n][m])
+                if self.nodes[n][m].portal and n != y and m !=x:
+                    self.nodes[n][m].neighbours.remove(self.nodes[y][x])
+                    self.nodes[y][x].neighbours.remove(self.nodes[n][m])
         #for n in self.nodes:
         #    if n.getx != x and n.gety != y and n.getPortal:
         #        self.nodes[n.getx][n.gety].neighbours.remove(self.nodes[x][y])
@@ -164,20 +164,22 @@ class Enemy:
                         while not spawned:  # finche non viene spawnato genero coordinate e verifico che non siano in una stanza con gia un portale
                             spawnX = np.random.random_integers(self.MapSize-1)
                             spawnY = np.random.random_integers(self.MapSize-1)
-                            if not self.nodes[spawnX][
-                                spawnY].getPortal():  # se le coordinate non hanno gia un portale, controllo se non ce n'e un altro nella stanza
-                                stanza = self.nodes[spawnX][spawnY].getRoom()
+                            if not self.nodes[spawnY][
+                                spawnX].portal and not self.nodes[spawnY][spawnX].manifestazione:  # se le coordinate non hanno gia un portale, controllo se non ce n'e un altro nella stanza
+                                stanza = self.nodes[spawnY][spawnX].roomID
                                 spawned = True
-                                for n in self.nodes:
-                                    if n.getRoom() == stanza:
-                                        spawned = False
+                                for n in range(len(self.nodes)):
+                                    for m in range(len(self.nodes[0])):
+                                        if self.nodes[n][m].portal and self.nodes[n][m].roomID == stanza:
+                                         spawned = False
                                 if spawned:  # dopo che trovo delle coordinate valide aggiorno i vicini creando collegamenti con gli altri portali
-                                    self.nodes[spawnX][spawnY].setPortal(True)
-                                    for n in self.nodes:
-                                        if n.getPortal():  # controllo di non aggiungere un collegamento tra nodo a se stesso
-                                            if n.getx() != spawnX or n.gety() != spawnY:
-                                                self.nodes[n.getx()][n.gety()].addNeighbour(self.nodes[spawnX][spawnY])
-                                                self.nodes[spawnX][spawnY].addNeighbour(self.nodes[n.getx()][n.gety()])
+                                    self.nodes[spawnY][spawnX].setPortal(True)
+                                    for n in range(len(self.nodes)):
+                                        for m in range(len(self.nodes[0])):
+                                            if self.nodes[n][m].portal:  # controllo di non aggiungere un collegamento tra nodo a se stesso
+                                                if m != spawnX or n != spawnY:
+                                                    self.nodes[n][m].addNeighbour(self.nodes[spawnY][spawnX])
+                                                    self.nodes[spawnY][spawnX].addNeighbour(self.nodes[n][m])
                     if not self.maxEvent:  #
                         self.turnToSpawnMan -= 1
                         if self.turnToSpawnMan == 0:

@@ -150,9 +150,9 @@ try:
         print("gestione turno giocatore")
         count += 1
         nodes = nemico.getNodes()
-        if nodes[player.x][player.y].portal:
+        if nodes[player.y][player.x].portal:
             playerEndTurn = True
-            nemico.destroyPortal(player.getX(), player.getY())
+            nemico.destroyPortal(player.x, player.y)
         elif nodes[player.x][player.y].manifestazione:
             playerEndTurn = True
             ######################################################################################
