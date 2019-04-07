@@ -146,56 +146,57 @@ class Enemy:
     def update(self):
         self.generatepathto(self.playerTarget.x, self.playerTarget.y)
         while self.move1:  # finche tocca al nemico creo il percorso fino al giocatore
-            if len(self.currentpath) is not None:  # se non sono sul giocatore il nemico si muove finche puo
-                self.remainingMovement -= self.map.costToEnter(self.tileX, self.tileY, self.currentpath[1].x,
-                                                               self.currentpath[1].y)
-                self.tileX = self.currentpath[1].x
-                self.tileY = self.currentpath[1].y
-                self.currentpath.pop(0)
-                if len(self.currentpath) == 1:  # se dopo essersi mosso sono arrivato al giocatore cancello il percorso
-                    self.currentpath = None
-                if self.remainingMovement <= 0:  # se ho finito i movimenti a disposizione resetto le variabili di movimento e vedo se devo spawnare un portale
-                    self.move1 = False
-                    self.remainingMovement = self.maxMovement
-                    self.turnToSpawn -= 1
-                    if self.turnToSpawn == 0:  # se e il momento di spawnare un portale
-                        self.turnToSpawn = self.portalSpawn
-                        spawned = False
-                        while not spawned:  # finche non viene spawnato genero coordinate e verifico che non siano in una stanza con gia un portale
-                            spawnX = np.random.random_integers(self.MapSize-1)
-                            spawnY = np.random.random_integers(self.MapSize-1)
-                            if not self.nodes[spawnY][
-                                spawnX].portal and not self.nodes[spawnY][spawnX].manifestazione:  # se le coordinate non hanno gia un portale, controllo se non ce n'e un altro nella stanza
-                                stanza = self.nodes[spawnY][spawnX].roomID
-                                spawned = True
-                                for n in range(len(self.nodes)):
-                                    for m in range(len(self.nodes[0])):
-                                        if self.nodes[n][m].portal and self.nodes[n][m].roomID == stanza:
-                                         spawned = False
-                                if spawned:  # dopo che trovo delle coordinate valide aggiorno i vicini creando collegamenti con gli altri portali
-                                    self.nodes[spawnY][spawnX].setPortal(True)
+            if self.currentpath is not None:
+                if len(self.currentpath) is not None:  # se non sono sul giocatore il nemico si muove finche puo
+                    self.remainingMovement -= self.map.costToEnter(self.tileX, self.tileY, self.currentpath[1].x,
+                                                                   self.currentpath[1].y)
+                    self.tileX = self.currentpath[1].x
+                    self.tileY = self.currentpath[1].y
+                    self.currentpath.pop(0)
+                    if len(self.currentpath) == 1:  # se dopo essersi mosso sono arrivato al giocatore cancello il percorso
+                        self.currentpath = None
+                    if self.remainingMovement <= 0:  # se ho finito i movimenti a disposizione resetto le variabili di movimento e vedo se devo spawnare un portale
+                        self.move1 = False
+                        self.remainingMovement = self.maxMovement
+                        self.turnToSpawn -= 1
+                        if self.turnToSpawn == 0:  # se e il momento di spawnare un portale
+                            self.turnToSpawn = self.portalSpawn
+                            spawned = False
+                            while not spawned:  # finche non viene spawnato genero coordinate e verifico che non siano in una stanza con gia un portale
+                                spawnX = np.random.random_integers(self.MapSize-1)
+                                spawnY = np.random.random_integers(self.MapSize-1)
+                                if not self.nodes[spawnY][
+                                    spawnX].portal and not self.nodes[spawnY][spawnX].manifestazione:  # se le coordinate non hanno gia un portale, controllo se non ce n'e un altro nella stanza
+                                    stanza = self.nodes[spawnY][spawnX].roomID
+                                    spawned = True
                                     for n in range(len(self.nodes)):
                                         for m in range(len(self.nodes[0])):
-                                            if self.nodes[n][m].portal:  # controllo di non aggiungere un collegamento tra nodo a se stesso
-                                                if m != spawnX or n != spawnY:
-                                                    self.nodes[n][m].addNeighbour(self.nodes[spawnY][spawnX])
-                                                    self.nodes[spawnY][spawnX].addNeighbour(self.nodes[n][m])
-                    if not self.maxEvent:  #
-                        self.turnToSpawnMan -= 1
-                        if self.turnToSpawnMan == 0:
-                            self.spawnManifestazione()
-                            self.maxEvent = True
-                if self.tileX == self.playerTarget.getX() and self.tileY == self.playerTarget.getY():  # se ho raggiunto il giocatore, il nemico non si muove piu e si teletrasporta ad almeno sei caselle di distanza. il ciocatore perde fede
-                    self.remainingMovement = 0
-                    distance = False
-                    while not distance:
-                        newX = np.random.random_integers(self.MapSize-1)
-                        newY = np.random.random_integers(self.MapSize-1)
-                        if np.abs(self.tileX - newX) >= 6 or np.abs(self.tileY - newY):
-                            distance = True
-                            self.tileX = newX
-                            self.tileY = newY
-                            self.playerTarget.decrementaFede()
+                                            if self.nodes[n][m].portal and self.nodes[n][m].roomID == stanza:
+                                             spawned = False
+                                    if spawned:  # dopo che trovo delle coordinate valide aggiorno i vicini creando collegamenti con gli altri portali
+                                        self.nodes[spawnY][spawnX].setPortal(True)
+                                        for n in range(len(self.nodes)):
+                                            for m in range(len(self.nodes[0])):
+                                                if self.nodes[n][m].portal:  # controllo di non aggiungere un collegamento tra nodo a se stesso
+                                                    if m != spawnX or n != spawnY:
+                                                        self.nodes[n][m].addNeighbour(self.nodes[spawnY][spawnX])
+                                                        self.nodes[spawnY][spawnX].addNeighbour(self.nodes[n][m])
+                        if not self.maxEvent:  #
+                            self.turnToSpawnMan -= 1
+                            if self.turnToSpawnMan == 0:
+                                self.spawnManifestazione()
+                                self.maxEvent = True
+                    if self.tileX == self.playerTarget.getX() and self.tileY == self.playerTarget.getY():  # se ho raggiunto il giocatore, il nemico non si muove piu e si teletrasporta ad almeno sei caselle di distanza. il ciocatore perde fede
+                        self.remainingMovement = 0
+                        distance = False
+                        while not distance:
+                            newX = np.random.random_integers(self.MapSize-1)
+                            newY = np.random.random_integers(self.MapSize-1)
+                            if np.abs(self.tileX - newX) >= 6 or np.abs(self.tileY - newY):
+                                distance = True
+                                self.tileX = newX
+                                self.tileY = newY
+                                self.playerTarget.decrementaFede()
 
     def getX(self):
         return self.tileX
