@@ -118,7 +118,15 @@ class Enemy:
         while curr is not None:
             cpath.append(curr)
             curr = prev[curr.y][curr.x]
+        for n in cpath:
+            print("percorso:")
+            print(n.x)
+            print(n.y)
         cpath.reverse()
+        for n in cpath:
+            print("percorso:")
+            print(n.x)
+            print(n.y)
         self.currentpath = cpath
 
     # chiede se la cella alle coordinate passate e anche la cella di un portale
@@ -147,10 +155,6 @@ class Enemy:
         self.generatepathto(self.playerTarget.x, self.playerTarget.y)
         while self.move1:  # finche tocca al nemico creo il percorso fino al giocatore
             if self.currentpath is not None:
-                for n in self.currentpath:
-                    print("percorso:")
-                    print(n.x)
-                    print(n.y)
                 if len(self.currentpath) is not None:  # se non sono sul giocatore il nemico si muove finche puo
                     self.remainingMovement -= self.map.costToEnter(self.tileX, self.tileY, self.currentpath[1].x,
                                                                    self.currentpath[1].y)
