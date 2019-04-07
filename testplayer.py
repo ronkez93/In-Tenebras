@@ -209,6 +209,7 @@ try:
                     if ser.in_waiting>0:
                         print("usato un oggetto")
                         oggetto=ser.readline()
+                        print(oggetto)
                         if oggetto=="04 27 84 EA E6 4C 81" and not piuma:
                             piuma=True
                             doppioTurno=True
@@ -216,9 +217,11 @@ try:
                         elif oggetto == "04 38 83 BA 90 5B 81" and not fiasca:
                             fiasca=True
                             player.addStamina(3)
+                            print("fiasca")
                         elif oggetto == "04 40 83 BA 90 5B 81" and not specchio:
                             ser.write(str(nemico.getPos())+",3;")
                             specchio=True
+                            print("specchio")
                     #####################################################
                     #   controllo uso oggetto? riposo?                  #
                     #####################################################
