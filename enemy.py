@@ -156,6 +156,7 @@ class Enemy:
                     if len(self.currentpath) == 1:  # se dopo essersi mosso sono arrivato al giocatore cancello il percorso
                         player.fede-=1
                         self.currentpath = None
+                        self.remainingMovement=0
                     if self.remainingMovement <= 0:  # se ho finito i movimenti a disposizione resetto le variabili di movimento e vedo se devo spawnare un portale
                         self.move1 = False
                         self.remainingMovement = self.maxMovement
