@@ -10,10 +10,12 @@ import math
 class Player:
 
     def __init__(self):
+        self.maxFede=5
+        self.maxStamina=5
         self.x = 0
         self.y = 0
-        self.fede = 5
-        self.stamina = 5
+        self.fede = self.maxFede
+        self.stamina = self.maxStamina
         self.map = Map.Map()
         self.roomID = self.map.allNode[self.x][self.y].roomID
         self.pathfindingGraph = self.map.getAllNode()       # grafo pathfinding giocatore
@@ -54,4 +56,12 @@ class Player:
 
     def decrementaStamina(self):
         self.stamina -=1
+
+    def addStamina(self,n):
+        if self.stamina+n>self.maxStamina:
+            self.stamina=self.maxStamina
+        else:
+            self.stamina+=n
+
+
 
