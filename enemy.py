@@ -87,7 +87,7 @@ class Enemy:
         print(self.playerTarget.x)
         print(self.playerTarget.y)
         source = self.nodes[self.tileY][self.tileX]
-        target = self.nodes[y][x]
+        target = self.nodes[x][y]
         dist = [[0 for j in range(15)] for i in range(15)]
         prev = [[node.Node() for j in range(15)] for i in range(15)]
         unvisited = []
@@ -114,14 +114,11 @@ class Enemy:
         if prev[target.y][target.x] is None:
             return
         cpath = []
-        curr = self.nodes[target.y][target.x]
+        curr = target
         while curr is not None:
             cpath.append(curr)
             curr = prev[curr.y][curr.x]
-        for n in cpath:
-            print("percorso:")
-            print(n.x)
-            print(n.y)
+        print()
         cpath.reverse()
         self.currentpath = cpath
 
