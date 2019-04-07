@@ -205,6 +205,10 @@ try:
 
                         playerEndTurn = True
                 else:
+                    if ser.in_waiting>0:
+                        print("usato un oggetto")
+                        oggetto=ser.readline()
+                        print(oggetto)
                     #####################################################
                     #   controllo uso oggetto? riposo?                  #
                     #####################################################
