@@ -303,6 +303,7 @@ try:
             # if prova==2:
             #
             ######################################################################################
+            successo=True
             if successo:
                 successo=False
                 nemico.risolviManifestazione(player.x, player.y)
