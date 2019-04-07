@@ -111,7 +111,7 @@ class Enemy:
                     dist[n.y][n.x] = alt
                     prev[n.y][n.x] = u
         #print(prev)
-        if prev[target.x][target.y] is None:
+        if prev[target.y][target.x] is None:
             return
         cpath = []
         curr = target
@@ -121,11 +121,8 @@ class Enemy:
         while curr is not None:
             cpath.append(curr)
             curr = prev[curr.y][curr.x]
+        print()
         cpath.reverse()
-        for n in cpath:
-            print("percorso:")
-            print(n.x)
-            print(n.y)
         self.currentpath = cpath
 
     # chiede se la cella alle coordinate passate e anche la cella di un portale
