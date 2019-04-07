@@ -243,7 +243,7 @@ try:
             ser.write(str(nemico.getPos())+",3;")
             illuminaStanza()
             print("inizio nuovo turno")
-        else:
+        elif playerEndTurn and doppioTurno:
             print("doppioturno")
             playerEndTurn = False
             player.x=posPlayerX
