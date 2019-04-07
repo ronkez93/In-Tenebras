@@ -238,7 +238,7 @@ try:
             nemico.move1=True
             nemico.updatePlayerPos(player.x, player.y)
             nemico.update()
-            if nemico.playertarget.fede==0:
+            if nemico.playerTarget.fede==0:
                 sconfitta=True
             elif nemico.countportal()==6:
                 sconfitta=True
