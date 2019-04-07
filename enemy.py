@@ -212,19 +212,19 @@ class Enemy:
             spawn = True
             spawnX = np.random.random_integers(self.MapSize-1)
             spawnY = np.random.random_integers(self.MapSize-1)
-            print("dimensioni")
-            print(len(self.nodes))
-            print(len(self.nodes[0]))
             for n in range(len(self.nodes)):
                 for m in range(len(self.nodes[0])):
                     if self.nodes[n][m].manifestazione:
-                        if self.nodes[n][m].roomID==self.nodes[spawnX][spawnY].roomID:
+                        if self.nodes[n][m].roomID==self.nodes[spawnY][spawnX].roomID:
                             spawn=False
                     if self.playerTarget.distanceTo(spawnX,spawnY)<7:
                         spawn = False
                     if self.nodes[spawnX][spawnY].portal:
                         spawn=False
-        self.nodes[spawnX][spawnY].manifestazione=True
+        self.nodes[spawnY][spawnX].manifestazione=True
+        print("manifestazione in")
+        print(spawnX)
+        print(spawnY)
 
     def getNodes(self):
         return self.nodes
