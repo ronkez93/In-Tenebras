@@ -147,6 +147,10 @@ class Enemy:
         self.generatepathto(self.playerTarget.x, self.playerTarget.y)
         while self.move1:  # finche tocca al nemico creo il percorso fino al giocatore
             if self.currentpath is not None:
+                for n in self.currentpath:
+                    print("percorso:")
+                    print(n.x)
+                    print(n.y)
                 if len(self.currentpath) is not None:  # se non sono sul giocatore il nemico si muove finche puo
                     self.remainingMovement -= self.map.costToEnter(self.tileX, self.tileY, self.currentpath[1].x,
                                                                    self.currentpath[1].y)
@@ -156,7 +160,7 @@ class Enemy:
                     if len(self.currentpath) == 1:  # se dopo essersi mosso sono arrivato al giocatore cancello il percorso
                         player.fede-=1
                         self.currentpath = None
-                        self.remainingMovement=0;
+                        self.remainingMovement=0
                     if self.remainingMovement <= 0:  # se ho finito i movimenti a disposizione resetto le variabili di movimento e vedo se devo spawnare un portale
                         self.move1 = False
                         self.remainingMovement = self.maxMovement
