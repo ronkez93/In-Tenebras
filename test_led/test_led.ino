@@ -19,7 +19,7 @@
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800); 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
-int delayval = 50; // delay for half a second 
+int delayval = 100; // delay for half a second 
 int n=0;
 int oldPixelnum=-1;
 String inputString="";
@@ -30,8 +30,6 @@ void setup() {
   //rfid
   SPI.begin();
   mfrc522.PCD_Init();
-  pinMode(LED_G, OUTPUT);
-  pinMode(LED_R, OUTPUT);
 
   //serial and LCD
   Serial.begin(9600);
@@ -59,12 +57,12 @@ void loop() {
     }
     received=true;
   }
-  Serial.print(readed);
+  //Serial.print(readed);
   bool lettonum=false;
   String num="";
   String pixcolor="";
   if (received){
-    Serial.println("im in");
+    //Serial.println("im in");
     for (int i=0;i<buffindex;i++){ 
       if (inputstring[i] != ',' && !lettonum){
           num+=inputstring[i];
@@ -73,22 +71,24 @@ void loop() {
         n=num.toInt();
         lettonum=true;
       }
-      if (inputstring[i] != ';' && lettonum){
+      if (inputstring[i] != ';' && lettonum && inputstring[i] != ','){
         pixcolor+=inputstring[i];
       }
       if (inputstring[i] == ';'){
         pixelcolor=pixcolor.toInt();
-        Serial.print("ho letto: ");
+        /*Serial.print("ho letto: ");
         Serial.println(n);
         Serial.print("colore: ");
-        Serial.println(pixelcolor);
+        Serial.println(pixelcolor);*/
         pixel(n,pixelcolor);
+        num="";
+        pixcolor="";
         lettonum=false;
       }
     }
     sendPositionToNextion();
-    rfid();
   }
+  rfid();
   delay(delayval); // Delay for a period of time (in milliseconds).
   ledoff();
 }
@@ -99,22 +99,25 @@ void pixel(int num, int pc){    //funzione gestore dei pixel
   // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
 
     switch (pc){
-      case 0:
-          pixels.setPixelColor(num, pixels.Color(90,0,0));
-          break;
-       case 1:
-          pixels.setPixelColor(num, pixels.Color(150,0,0));
-          break;
-       case 2:
-          pixels.setPixelColor(num, pixels.Color(0,60,120));
+      case 4:
+          pixels.setPixelColor(num, pixels.Color(40,0,0));
           break;
        case 3:
+          pixels.setPixelColor(num, pixels.Color(150,0,0));
+          break;
+       case 1:
+          pixels.setPixelColor(num, pixels.Color(0,60,120));
+          break;
+       case 0:
           pixels.setPixelColor(num, pixels.Color(180,160,120));
           break;
-       case 4:
+       case 5:
           for (int i=0;i<NUMPIXELS;i++){
             pixels.setPixelColor(i, pixels.Color(0,0,0));
           }
+          break;
+          case 2:
+          pixels.setPixelColor(num, pixels.Color(180,0,120));
           }
       
 
@@ -135,16 +138,19 @@ void endNextionCommand(){
 }
 
 void rfid(){
+  //Serial.println("dentro funz. rfid");
     // Look for new cards
   if ( ! mfrc522.PICC_IsNewCardPresent()) 
   {
     return;
   }
+  //Serial.println("trovata carta");
   // Select one of the cards
   if ( ! mfrc522.PICC_ReadCardSerial()) 
   {
     return;
   }
+  //Serial.println("scelta una");
   String content= "";
   byte letter;
   for (byte i = 0; i < mfrc522.uid.size; i++) 
@@ -155,12 +161,14 @@ void rfid(){
      content.concat(String(mfrc522.uid.uidByte[i], HEX));
   }
   content.toUpperCase();
-  if (content.substring(1) == "69 B4 DB 56") //change here the UID of the card/cards that you want to give access
+  Serial.println(content);
+  if (content.equals("04 27 84 EA E6 4C 81")) //change here the UID of the card/cards that you want to give access
   {
+    Serial.write("1");
     //Serial.println("Item n.1 used");
     //Serial.println();
     //delay(500);
-    digitalWrite(LED_G, HIGH);
+    //digitalWrite(LED_G, HIGH);
     //tone(BUZZER, 500);
     //delay(300);
     //noTone(BUZZER);
@@ -169,13 +177,15 @@ void rfid(){
     //myServo.write(0);
     
   }
-  else   {
-    //Serial.println("Item n.2 used");
-    digitalWrite(LED_R, HIGH);
-    //tone(BUZZER, 300);
-    //delay(1000);
-    
-    //noTone(BUZZER);
+  else{
+    if (content.equals("04 38 83 BA 90 5B 81")){
+      Serial.write("2");
+      //Serial.println("Item n.2 used");
+      //digitalWrite(LED_R, HIGH);
+      //tone(BUZZER, 300);
+      //delay(1000);  
+      //noTone(BUZZER);
+    }
   }
 }
 
