@@ -202,11 +202,38 @@ try:
     #      if (n >= 32 and n <= 126):
     #           string += chr(n)
     #   print("messaggio ricevuto e tradotto: {}".format(string))
-    #   battito=int(string)
+    #   if int(string)>battito*1.15:
+    #       nemico.maxMovement=4
+    #   elsif int(string)>battito*1.3:
+    #       nemico.maxMovement=5
     #   radio.stopListening()
     #
     #####################################################
     while not vittoria or not sconfitta:  # gestione del turno giocatore
+        #   message=list("2")
+        #   while len(message)<32:
+        #       message.append(0)
+        #   start = time.time()
+        #   radio.write(message)
+        #   print("Sent the message: {}".format(message))
+        #   radio.startListening()
+        #   while not radio.available(0):
+        #       time.sleep(1 / 100)
+        #       if time.time() - start > 2:
+        #           print("Timed out.")
+        #           break
+        #   receivedMessage = []
+        #   radio.read(receivedMessage, radio.getDynamicPayloadSize())
+        #   print("Received: {}".format(receivedMessage))
+        #
+        #   print("traduzione in unicode")
+        #   string = ""
+        #   for n in receivedMessage:
+        #      if (n >= 32 and n <= 126):
+        #           string += chr(n)
+        #   print("messaggio ricevuto e tradotto: {}".format(string))
+        #   battito=int(string)
+        #   radio.stopListening()
         print("gestione turno giocatore")
         count += 1
         nodes = nemico.getNodes()
@@ -275,7 +302,7 @@ try:
             # giroscopio
             #########################################
             # if prova==2:
-            #       
+            #
             ######################################################################################
             if successo:
                 successo=False
@@ -325,7 +352,7 @@ try:
 
                         playerEndTurn = True
                 else:
-                    if ser.in_waiting>0:
+                    if ser.in_waiting>0:        # uso oggetto
                         print("usato un oggetto")
                         oggetto=ser.readline()
                         print(oggetto)
@@ -342,8 +369,59 @@ try:
                             specchio=True
                             print("specchio")
                     #####################################################
-                    #                          riposo?                  #
+                    #                          riposo                   #
                     #####################################################
+                    #   message=list("4")
+                    #   while len(message)<32:
+                    #       message.append(0)
+                    #   start = time.time()
+                    #   radio.write(message)
+                    #   print("Sent the message: {}".format(message))
+                    #   radio.startListening()
+                    #   while not radio.available(0):
+                    #       time.sleep(1 / 100)
+                    #       if time.time() - start > 2:
+                    #           print("Timed out.")
+                    #           break
+                    #   receivedMessage = []
+                    #   radio.read(receivedMessage, radio.getDynamicPayloadSize())
+                    #   print("Received: {}".format(receivedMessage))
+                    #
+                    #   print("traduzione in unicode")
+                    #   string = ""
+                    #   for n in receivedMessage:
+                    #      if (n >= 32 and n <= 126):
+                    #           string += chr(n)
+                    #   print("messaggio ricevuto e tradotto: {}".format(string))
+                    #   if int(string)>175 and int(string)<185:
+                    #       playerEndTurn = True
+                    #       player.addStamina(1)
+                    #   message=list("5")
+                    #   while len(message)<32:
+                    #       message.append(0)
+                    #   start = time.time()
+                    #   radio.write(message)
+                    #   print("Sent the message: {}".format(message))
+                    #   radio.startListening()
+                    #   while not radio.available(0):
+                    #       time.sleep(1 / 100)
+                    #       if time.time() - start > 2:
+                    #           print("Timed out.")
+                    #           break
+                    #   receivedMessage = []
+                    #   radio.read(receivedMessage, radio.getDynamicPayloadSize())
+                    #   print("Received: {}".format(receivedMessage))
+                    #
+                    #   print("traduzione in unicode")
+                    #   string = ""
+                    #   for n in receivedMessage:
+                    #      if (n >= 32 and n <= 126):
+                    #           string += chr(n)
+                    #   print("messaggio ricevuto e tradotto: {}".format(string))
+                    #   if int(string)>175 and int(string)<185:
+                    #       playerEndTurn = True
+                    #       player.addStamina(1)
+                    #   radio.stopListening()
                     playerEndTurn = False
                 time.sleep(0.05)
                 GPIO.output(p, 0)
