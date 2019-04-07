@@ -92,6 +92,10 @@ nemico = enemy.Enemy()
 initPosX = 7
 initPosY = 14
 mappa = Map.Map()
+specchio=False
+piuma=False
+fiasca=False
+doppioTurno=False
 try:
     # accende led
     ser.write(str(
@@ -207,7 +211,7 @@ try:
                     playerEndTurn = False
                 time.sleep(0.05)
                 GPIO.output(p, 0)
-        if playerEndTurn:
+        if playerEndTurn and not doppioTurno:
             clearboard()
             print("fine turno")
             time.sleep(2)
@@ -222,6 +226,12 @@ try:
             ser.write(str(nemico.getPos())+",3;")
             illuminaStanza()
             print("inizio nuovo turno")
+        else:
+            playerEndTurn = False
+            player.x=posPlayerX
+            player.y=posPlayerY
+            player.aggiornaRoom()
+            doppioTurno=False
         if count == 100:
             ser.flushInput()
             count = 0
