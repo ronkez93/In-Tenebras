@@ -135,7 +135,6 @@ try:
     # accende led
     ser.write(str(
         initPosY + initPosX * 15) + ",0;")  # inizializzazione del giocatore: deve venir posizionato sulla casella 217, e nemico
-    # manca battito rilevato
     while not playerOnBoard:
         for n, p in enumerate(gpioPin):
             GPIO.output(p, 1)
@@ -204,7 +203,7 @@ try:
     #   print("messaggio ricevuto e tradotto: {}".format(string))
     #   if int(string)>battito*1.15:
     #       nemico.maxMovement=4
-    #   elsif int(string)>battito*1.3:
+    #   elif int(string)>battito*1.3:
     #       nemico.maxMovement=5
     #   radio.stopListening()
     #
@@ -440,6 +439,10 @@ try:
                 sconfitta=True
             elif nemico.countportal()==6:
                 sconfitta=True
+            if risolte==5:
+                vittoria=True
+            print("Manifestazioni risolte:")
+            print(risolte)
             illuminaStanza()
             ser.write(str(nemico.getPos())+",3;")
         elif playerEndTurn and doppioTurno:
@@ -452,6 +455,10 @@ try:
         if count == 100:
             ser.flushInput()
             count = 0
+    if sconfitta:
+        print("vittoria Demone")
+    elif vittoria:
+        print("vittoria giocatore")
 except KeyboardInterrupt:  # trap a CTRL+C keyboard interrupt
     GPIO.cleanup()
 
