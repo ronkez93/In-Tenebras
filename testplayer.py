@@ -55,12 +55,12 @@ def illuminaStanza():
                     string=string+(str(m + n * 15) + ",2;")
                 elif nodes[m][n].manifestazione:
                     string=string+(str(m + n * 15) + ",1;")
-            elif nodes[m][n].roomID == player.roomID:
-                string=string+(str(m + n * 15) + ",0;")
-            elif nodes[m][n].portal:
-                string=string+(str(m + n * 15) + ",2;")
-            elif nodes[m][n].manifestazione:
-                string=string+(str(m + n * 15) + ",1;")
+            # elif nodes[m][n].roomID == player.roomID:
+            #    string=string+(str(m + n * 15) + ",0;")
+            # elif nodes[m][n].portal:
+            #     string=string+(str(m + n * 15) + ",2;")
+            # elif nodes[m][n].manifestazione:
+            #     string=string+(str(m + n * 15) + ",1;")
     print(string)
     ser.write(string)
 
