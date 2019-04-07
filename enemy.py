@@ -146,8 +146,8 @@ class Enemy:
     def update(self):
         self.generatepathto(self.playerTarget.x, self.playerTarget.y)
         while self.move1:  # finche tocca al nemico creo il percorso fino al giocatore
-            if self.currentpath is not None:
-                if len(self.currentpath) is not None:  # se non sono sul giocatore il nemico si muove finche puo
+            if not self.currentpath:
+                if len(self.currentpath) >0:  # se non sono sul giocatore il nemico si muove finche puo
                     print("stampo percorso")
                     for i in range(len(self.currentpath)):
                         print(self.currentpath[i].x)
