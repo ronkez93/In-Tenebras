@@ -96,7 +96,7 @@ class Enemy:
                 if self.nodes[n][m] != source:
                     dist[n][m] = float('inf')
                     prev[n][m] = None
-                unvisited.append(self.nodes[m][n])
+                unvisited.append(self.nodes[n][m])
         while len(unvisited) > 0:
             u = None
             for n in unvisited:
@@ -111,7 +111,7 @@ class Enemy:
                     dist[n.y][n.x] = alt
                     prev[n.y][n.x] = u
         #print(prev)
-        if prev[target.y][target.x] is None:
+        if prev[y][x] is None:
             return
         cpath = []
         curr = target
