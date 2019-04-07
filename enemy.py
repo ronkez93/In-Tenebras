@@ -154,6 +154,7 @@ class Enemy:
                     self.tileY = self.currentpath[1].y
                     self.currentpath.pop(0)
                     if len(self.currentpath) == 1:  # se dopo essersi mosso sono arrivato al giocatore cancello il percorso
+                        player.fede-=1
                         self.currentpath = None
                     if self.remainingMovement <= 0:  # se ho finito i movimenti a disposizione resetto le variabili di movimento e vedo se devo spawnare un portale
                         self.move1 = False
@@ -233,7 +234,16 @@ class Enemy:
         return self.nodes
 
     def risolviManifestazione(self, x, y):
-        self.nodes[x][y].manifestazione=False
+        self.nodes[y][x].manifestazione=False
         self.maxEvent = False
         self.turnToSpawnMan = self.turniSpawnManifestazione
 
+    def countportal(self):
+        count=0
+        for n in range(len(self.nodes)):
+            for m in range(len(self.nodes[0])):
+                if self.nodes[n][m].portal:
+                    count +=1
+        print("portali aperti:")
+        print(count)
+        return count

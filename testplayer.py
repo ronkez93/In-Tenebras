@@ -96,6 +96,8 @@ specchio=False
 piuma=False
 fiasca=False
 doppioTurno=False
+vittoria=False
+sconfitta=False
 try:
     clearboard()
     # accende led
@@ -146,14 +148,14 @@ try:
     #####################################################
     #   inserire controllo battito cardiaco             #
     #####################################################
-    while True:  # gestione del turno giocatore
+    while not vittoria or not sconfitta:  # gestione del turno giocatore
         print("gestione turno giocatore")
         count += 1
         nodes = nemico.getNodes()
         if nodes[player.y][player.x].portal:
             playerEndTurn = True
             nemico.destroyPortal(player.x, player.y)
-        elif nodes[player.x][player.y].manifestazione:
+        elif nodes[player.y][player.x].manifestazione:
             playerEndTurn = True
             ######################################################################################
             # inserire prova sensori per risoluzione manifestazione e gestione evento             #
@@ -163,9 +165,6 @@ try:
             oldPosx = player.x
             oldPosy = player.y
             playerOnBoard = False
-            ######################################################################################
-            # inserire caso uso oggetto, riposo, cosra                                            #
-            ######################################################################################
             for n, p in enumerate(gpioPin):
                 GPIO.output(p, 1)
                 # Read all the ADC channel values in a list.
@@ -223,7 +222,7 @@ try:
                             specchio=True
                             print("specchio")
                     #####################################################
-                    #   controllo uso oggetto? riposo?                  #
+                    #                          riposo?                  #
                     #####################################################
                     playerEndTurn = False
                 time.sleep(0.05)
@@ -239,10 +238,12 @@ try:
             nemico.move1=True
             nemico.updatePlayerPos(player.x, player.y)
             nemico.update()
-            print("3")
-            ser.write(str(nemico.getPos())+",3;")
+            if nemico.playertarget.fede==0:
+                sconfitta=True
+            elif nemico.countportal()==6:
+                sconfitta=True
             illuminaStanza()
-            print("inizio nuovo turno")
+            ser.write(str(nemico.getPos())+",3;")
         elif playerEndTurn and doppioTurno:
             print("doppioturno")
             playerEndTurn = False
