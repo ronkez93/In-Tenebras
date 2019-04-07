@@ -93,9 +93,9 @@ class Enemy:
         unvisited = []
         for n in range(len(self.nodes)): #righe
             for m in range(len(self.nodes[0])): #colonne
-                if self.nodes[m][n] != source:
-                    dist[m][n] = float('inf')
-                    prev[m][n] = None
+                if self.nodes[n][m] != source:
+                    dist[n][m] = float('inf')
+                    prev[n][m] = None
                 unvisited.append(self.nodes[m][n])
         while len(unvisited) > 0:
             u = None
@@ -111,14 +111,13 @@ class Enemy:
                     dist[n.y][n.x] = alt
                     prev[n.y][n.x] = u
         #print(prev)
-        if prev[target.x][target.y] is None:
+        if prev[target.y][target.x] is None:
             return
-        print("creo currentpath")
         cpath = []
         curr = target
         while curr is not None:
             cpath.append(curr)
-            curr = prev[curr.x][curr.y]
+            curr = prev[curr.y][curr.x]
         cpath.reverse()
         self.currentpath = cpath
 
@@ -147,15 +146,9 @@ class Enemy:
     def update(self):
         self.generatepathto(self.playerTarget.x, self.playerTarget.y)
         while self.move1:  # finche tocca al nemico creo il percorso fino al giocatore
-            if not self.currentpath:
-                #print("no loop infinito")
-                if len(self.currentpath) >0:  # se non sono sul giocatore il nemico si muove finche puo
-                    print("stampo percorso")
-                    for i in range(len(self.currentpath)):
-                        print(self.currentpath[i].x)
-                        print(self.currentpath[i].y)
-                    if len(self.currentpath)>=2:
-                        self.remainingMovement -= self.map.costToEnter(self.tileX, self.tileY, self.currentpath[1].x,
+            if self.currentpath is not None:
+                if len(self.currentpath) is not None:  # se non sono sul giocatore il nemico si muove finche puo
+                    self.remainingMovement -= self.map.costToEnter(self.tileX, self.tileY, self.currentpath[1].x,
                                                                    self.currentpath[1].y)
                     self.tileX = self.currentpath[1].x
                     self.tileY = self.currentpath[1].y
@@ -163,7 +156,7 @@ class Enemy:
                     if len(self.currentpath) == 1:  # se dopo essersi mosso sono arrivato al giocatore cancello il percorso
                         player.fede-=1
                         self.currentpath = None
-                        self.remainingMovement=0
+                        self.remainingMovement=0;
                     if self.remainingMovement <= 0:  # se ho finito i movimenti a disposizione resetto le variabili di movimento e vedo se devo spawnare un portale
                         self.move1 = False
                         self.remainingMovement = self.maxMovement
@@ -206,7 +199,6 @@ class Enemy:
                                 self.tileX = newX
                                 self.tileY = newY
                                 self.playerTarget.decrementaFede()
-            # print("loop infinito")
 
     def getX(self):
         return self.tileX
