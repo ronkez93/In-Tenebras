@@ -118,7 +118,10 @@ class Enemy:
         while curr is not None:
             cpath.append(curr)
             curr = prev[curr.y][curr.x]
-        print()
+        for n in cpath:
+            print("percorso:")
+            print(n.x)
+            print(n.y)
         cpath.reverse()
         self.currentpath = cpath
 
