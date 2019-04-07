@@ -97,6 +97,7 @@ piuma=False
 fiasca=False
 doppioTurno=False
 try:
+    clearboard()
     # accende led
     ser.write(str(
         initPosY + initPosX * 15) + ",0;")  # inizializzazione del giocatore: deve venir posizionato sulla casella 217, e nemico
