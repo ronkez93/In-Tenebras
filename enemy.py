@@ -100,16 +100,16 @@ class Enemy:
         while len(unvisited) > 0:
             u = None
             for n in unvisited:
-                if u is None or dist[n.y][n.x] < dist[u.y][u.x]:
+                if u is None or dist[n.x][n.y] < dist[u.x][u.y]:
                     u = n
             if u.x == target.x and u.y == target.y:
                 break
             unvisited.remove(u)
             for n in u.neighbours:
-                alt = dist[u.y][u.x] + self.map.costToEnter(u.x, u.y, n.x, n.y)
-                if alt < dist[n.y][n.x]:
-                    dist[n.y][n.x] = alt
-                    prev[n.y][n.x] = u
+                alt = dist[u.x][u.y] + self.map.costToEnter(u.x, u.y, n.x, n.y)
+                if alt < dist[n.x][n.y]:
+                    dist[n.x][n.y] = alt
+                    prev[n.x][n.y] = u
         #print(prev)
         if prev[target.x][target.y] is None:
             return
