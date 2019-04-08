@@ -81,7 +81,7 @@ void loop() {
         Serial.print("colore: ");
         Serial.println(pixelcolor);*/
         pixel(n,pixelcolor);
-        delay(20);
+        delay(100);
         num="";
         pixcolor="";
         lettonum=false;
@@ -110,7 +110,7 @@ void pixel(int num, int pc){    //funzione gestore dei pixel
           pixels.setPixelColor(num, pixels.Color(0,60,120));
           break;
        case 0:
-          pixels.setPixelColor(num, pixels.Color(180,160,120));
+          pixels.setPixelColor(num, pixels.Color(0,160,0));
           break;
        case 5:
           for (int i=0;i<NUMPIXELS;i++){
