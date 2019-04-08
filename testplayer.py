@@ -119,6 +119,7 @@ player = player.Player()
 nemico = enemy.Enemy()
 initPosX = 7
 initPosY = 14
+movimentoGiocatore=4
 mappa = Map.Map()
 specchio=False
 piuma=False
@@ -130,6 +131,7 @@ successo=False
 risolte=0
 battito=0
 minTemp=0
+acc=0
 try:
     clearboard()
     # accende led
@@ -201,14 +203,13 @@ try:
     #      if (n >= 32 and n <= 126):
     #           string += chr(n)
     #   print("messaggio ricevuto e tradotto: {}".format(string))
-    #   if int(string)>battito*1.15:
-    #       nemico.maxMovement=4
-    #   elif int(string)>battito*1.3:
-    #       nemico.maxMovement=5
     #   radio.stopListening()
     #
     #####################################################
     while not vittoria or not sconfitta:  # gestione del turno giocatore
+        #######################################
+        #   verifico battito per movimento demone
+        #######################################
         #   message=list("2")
         #   while len(message)<32:
         #       message.append(0)
@@ -231,8 +232,12 @@ try:
         #      if (n >= 32 and n <= 126):
         #           string += chr(n)
         #   print("messaggio ricevuto e tradotto: {}".format(string))
-        #   battito=int(string)
+        #   if int(string)>battito*1.15:
+        #       nemico.maxMovement=4
+        #   elif int(string)>battito*1.3:
+        #       nemico.maxMovement=5
         #   radio.stopListening()
+        ###################################
         print("gestione turno giocatore")
         count += 1
         nodes = nemico.getNodes()
@@ -243,7 +248,7 @@ try:
             playerEndTurn = True
             ######################################################################################
             # inserire prova sensori per risoluzione manifestazione e gestione evento            #
-            # #######################################
+            #########################################
             # temperatura
             #########################################
             # prova=np.random.random_integers(2)
@@ -295,13 +300,40 @@ try:
             #                   string += chr(n)
             #           print("messaggio ricevuto e tradotto: {}".format(string))
             #           temp=int(string)
-            #           if temp>5*0.5*risolte:
+            #           if temp>5+0.5*risolte:
             #               successo=True
-            # #######################################
+            #########################################
             # giroscopio
             #########################################
             # if prova==2:
-            #
+            #   sum=0;
+            #   for i in range(5):
+            #        time.sleep(1)
+            #        message=list("6")
+            #            while len(message)<32:
+            #                message.append(0)
+            #        start = time.time()
+            #             adio.write(message)
+            #            print("Sent the message: {}".format(message))
+            #            radio.startListening()
+            #            while not radio.available(0):
+            #                time.sleep(1 / 100)
+            #                if time.time() - start > 2:
+            #                    print("Timed out.")
+            #                    break
+            #            receivedMessage = []
+            #            radio.read(receivedMessage, radio.getDynamicPayloadSize())
+            #            print("Received: {}".format(receivedMessage))
+            #            print("traduzione in unicode")
+            #            string = ""
+            #            for n in receivedMessage:
+            #                if (n >= 32 and n <= 126):
+            #                    string += chr(n)
+            #            print("messaggio ricevuto e tradotto: {}".format(string))
+            #            acc=int(string)
+            #            sum +=acc
+            #            if sum>3+0.5*risolte:
+            #                successo=True
             ######################################################################################
             successo=True
             if successo:
@@ -343,13 +375,13 @@ try:
                         posPlayerX = n
                         # Pause for half a second.
                 if playerOnBoard and (posPlayerX != oldPosx or posPlayerY != oldPosy):
-                    if abs(posPlayerX-oldPosx)>4 or abs(posPlayerY-oldPosy)>4:
+                    if abs(posPlayerX-oldPosx)>movimentoGiocatore or abs(posPlayerY-oldPosy)>movimentoGiocatore:
                         print("xdiff")
                         print(abs(posPlayerX-oldPosx))
                         print("ydiff")
                         print(abs(posPlayerY-oldPosy))
                     else:
-
+                        movimentoGiocatore=4
                         playerEndTurn = True
                 else:
                     if ser.in_waiting>0:        # uso oggetto
@@ -422,6 +454,35 @@ try:
                     #       playerEndTurn = True
                     #       player.addStamina(1)
                     #   radio.stopListening()
+                    #####################################
+                    #       corsa
+                    #####################################
+                    #   message=list("6")
+                    #       while len(message)<32:
+                    #           message.append(0)
+                    #   start = time.time()
+                    #       radio.write(message)
+                    #       print("Sent the message: {}".format(message))
+                    #       radio.startListening()
+                    #       while not radio.available(0):
+                    #           time.sleep(1 / 100)
+                    #           if time.time() - start > 2:
+                    #               print("Timed out.")
+                    #               break
+                    #       receivedMessage = []
+                    #       radio.read(receivedMessage, radio.getDynamicPayloadSize())
+                    #       print("Received: {}".format(receivedMessage))
+                    #       print("traduzione in unicode")
+                    #       string = ""
+                    #       for n in receivedMessage:
+                    #           if (n >= 32 and n <= 126):
+                    #               string += chr(n)
+                    #       print("messaggio ricevuto e tradotto: {}".format(string))
+                    #       acc=int(string)
+                    #       if acc>2:
+                    #           if nemico.playerTarget.stamina > 0:
+                    #               nemico.playerTarget.stamina -=1
+                    #               movimentoGiocatore=6
                     playerEndTurn = False
                 time.sleep(0.05)
                 GPIO.output(p, 0)
