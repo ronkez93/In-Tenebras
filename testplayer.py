@@ -43,7 +43,7 @@ import serial  # importa libreria serial lettura valori usb
 
 def illuminaStanza():
     nodes = nemico.nodes
-    ser.write(str(nemico.getPos())+",3;")
+    #ser.write(str(nemico.getPos())+",3;")
     sleep(0.1)
     string=""
     for n in range(len(nodes)):
