@@ -7,12 +7,16 @@ import time
 # Import SPI library (for hardware SPI) and MCP3008 library.
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
+import enemy
+import player
+import Map
 # from .enemy import Enemy
 # inport GPIO library
 import numpy as np
 import RPi.GPIO as GPIO  # import RPi.GPIO module
 from time import sleep
 import serial  # importa libreria serial lettura valori usb
+
 
 # Software SPI configuration:
 # CLK  = 23
@@ -23,6 +27,35 @@ import serial  # importa libreria serial lettura valori usb
 
 # CS2 = 26
 # mcp2 = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS2, miso=MISO, mosi=MOSI)
+
+def illuminaStanza():
+    nodes = nemico.nodes
+    ser.write(str(nemico.getPos()) + ",3;")
+    sleep(0.1)
+    string = ""
+    for n in range(len(nodes)):
+        for m in range(len(nodes[0])):
+            if player.roomID == nodes[nemico.tileY][nemico.tileX].roomID:
+                if nodes[m][n].roomID == player.roomID:
+                    string = string + (str(m + n * 15) + ",4;")
+                if nodes[m][n].portal:
+                    string = string + (str(m + n * 15) + ",2;")
+                elif nodes[m][n].manifestazione:
+                    string = string + (str(m + n * 15) + ",1;")
+            elif nodes[m][n].roomID == player.roomID:
+                string = string + (str(m + n * 15) + ",0;")
+            elif nodes[m][n].portal:
+                string = string + (str(m + n * 15) + ",2;")
+            elif nodes[m][n].manifestazione:
+                string = string + (str(m + n * 15) + ",1;")
+    print(string)
+    ser.write(string)
+
+
+def clearboard():
+    string = "0,5;"
+    ser.write(string)
+
 
 # Hardware SPI configuration: un bus, due MCP3008
 SPI_PORT = 0
@@ -58,11 +91,13 @@ print('partenza del ciclo di lettura della posizione')
 print('-' * 57)
 # Main program loop.
 num = 0
-count = 0;
+count = 0
+player = player.Player()
+nemico = enemy.Enemy()
+posPlayerX = -1
+posPlayerY = -1
 try:
     while True:
-	num=-1
-        count += 1
         for n, p in enumerate(gpioPin):
             GPIO.output(p, 1)
             # Read all the ADC channel values in a list.
@@ -75,27 +110,32 @@ try:
                 values2[i] = mcp2.read_adc(i)
             # Print the ADC values.
             # results = np.append(values, values2, axis=0)
-            print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | '.format(*values2))
+            #    			print('| {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*values))
             for i in range(len(values)):
                 if values[i] > 1000:
-                    print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
+                    # print('{}{}{}{}'.format('sei in posizione ', i, ' , ', n))
                     num = i + n * 15
-                    print(str(i * 15 + n + 1))
-                    # Pause for half a second.
-                    ser.write(str(num)+ ",3")
+                    # print(str(i * 15 + n + 1))
+                    posPlayerY = i
+                    posPlayerX = n
             for i in range(len(values2)):
                 if values2[i] > 1000:
-                    print('{}{}{}{}'.format('sei in posizione ', (i + 8), ' , ', n))
+                    # print('{}{}{}{}'.format('sei in posizione ', i , ' , ', n + 8))
                     num = (i + 8) + n * 15
-                    print(str((i + 8) * 15 + n + 1))
-                    # Pause for half a second.
-                    ser.write(str(num)+ ",3")
-            # print('{}{}'.format('num=',num))
-            # ser.write(str(num))
-            time.sleep(0.1)
+                    # print(str((i + 8) * 15 + n + 1))
+                    posPlayerY = i + 8
+                    posPlayerX = n
+                    print(posPlayerX)
+                    print(posPlayerY)
+            if posPlayerX == initPosX and posPlayerY == initPosY and not playerOnBoard:
+                playerOnBoard = True
+                print("ciao giocatore")
+                player.x=posPlayerX
+                player.y=posPlayerY
+                player.aggiornaRoom()
+                # inserire illuminazione stanza
+                illuminaStanza()
             GPIO.output(p, 0)
-        if count == 100:
-            ser.flushInput()
-            count = 0
+        time.sleep(0.1)
 except KeyboardInterrupt:  # trap a CTRL+C keyboard interrupt
     GPIO.cleanup()

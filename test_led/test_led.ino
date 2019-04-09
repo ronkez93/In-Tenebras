@@ -110,7 +110,7 @@ void pixel(int num, int pc){    //funzione gestore dei pixel
           pixels.setPixelColor(num, pixels.Color(0,60,120));
           break;
        case 0:
-          pixels.setPixelColor(num, pixels.Color(0,160,0));
+          pixels.setPixelColor(num, pixels.Color(180,160,120));
           break;
        case 5:
           for (int i=0;i<NUMPIXELS;i++){
