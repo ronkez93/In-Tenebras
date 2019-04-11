@@ -238,6 +238,7 @@ try:
         #   radio.stopListening()
         ###################################
         print("gestione turno giocatore")
+        ser.write(str(player.y+player.x*15)+",0;")
         count += 1
         nodes = nemico.getNodes()
         if nodes[player.y][player.x].portal:
