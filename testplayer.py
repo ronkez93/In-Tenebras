@@ -506,7 +506,7 @@ try:
             print("Manifestazioni risolte:")
             print(risolte)
             illuminaStanza()
-            ser.write(str(nemico.getPos())+",3;")
+            #ser.write(str(nemico.getPos())+",3;")
         elif playerEndTurn and doppioTurno:
             print("doppioturno")
             playerEndTurn = False
