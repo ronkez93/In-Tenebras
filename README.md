@@ -1,4 +1,4 @@
-# Tesi
+# In Tenebras
 
 This repository contains the Python code of my thesis.
 
